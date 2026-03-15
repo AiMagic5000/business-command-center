@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase'
 import { verifyPinSession } from '@/lib/pin'
-import { decrypt } from '@/lib/crypto'
+import { decryptField } from '@/lib/crypto'
 
 export async function POST(
   req: NextRequest,
@@ -51,14 +51,10 @@ export async function POST(
     }
 
     let decryptedPassword = credential.password_encrypted || ''
-    try {
-      if (decryptedPassword && decryptedPassword.includes(':')) {
-        decryptedPassword = decrypt(decryptedPassword)
-      } else if (decryptedPassword.startsWith('ENCRYPT:')) {
-        decryptedPassword = decryptedPassword.replace('ENCRYPT:', '')
-      }
-    } catch {
-      decryptedPassword = '[Decryption failed]'
+    if (decryptedPassword.startsWith('ENCRYPT:')) {
+      decryptedPassword = decryptedPassword.slice(8)
+    } else if (decryptedPassword) {
+      decryptedPassword = decryptField(decryptedPassword) ?? decryptedPassword
     }
 
     await supabase.from('audit_log').insert({

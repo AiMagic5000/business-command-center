@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { createServiceClient } from '@/lib/supabase'
 import { verifyPinSession } from '@/lib/pin'
-import { decrypt } from '@/lib/crypto'
+import { decryptField } from '@/lib/crypto'
 
 export async function GET(req: NextRequest) {
   try {
@@ -51,15 +51,11 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Access denied' }, { status: 403 })
     }
 
-    let decryptedPassword = credential.password_encrypted
-    try {
-      if (credential.password_encrypted && !credential.password_encrypted.startsWith('ENCRYPT:')) {
-        decryptedPassword = decrypt(credential.password_encrypted)
-      } else if (credential.password_encrypted?.startsWith('ENCRYPT:')) {
-        decryptedPassword = credential.password_encrypted.replace('ENCRYPT:', '')
-      }
-    } catch {
-      decryptedPassword = '[Decryption failed]'
+    let decryptedPassword = credential.password_encrypted || ''
+    if (decryptedPassword.startsWith('ENCRYPT:')) {
+      decryptedPassword = decryptedPassword.slice(8)
+    } else if (decryptedPassword) {
+      decryptedPassword = decryptField(decryptedPassword) ?? decryptedPassword
     }
 
     await supabase.from('audit_log').insert({
