@@ -11,6 +11,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 COPY .env.local .env.local
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV NEXT_PUBLIC_CLERK_PROXY_URL=https://bcc.startmybusiness.us/__clerk
 RUN mkdir -p public && npm run build
 
 FROM base AS runner
