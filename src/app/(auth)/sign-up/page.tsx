@@ -24,6 +24,7 @@ export default function SignUpPage() {
         </p>
       </div>
 
+      <div className="w-full flex justify-center">
       <SignUp
         appearance={{
           variables: {
@@ -42,8 +43,9 @@ export default function SignUpPage() {
             },
           },
         }}
-        forceRedirectUrl="/vault/dashboard"
+        forceRedirectUrl="/dashboard"
       />
+      </div>
     </div>
   )
 }

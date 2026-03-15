@@ -54,7 +54,7 @@ export default function PinGuard({ children }: PinGuardProps) {
 
   const handlePinSuccess = useCallback(() => {
     setPinVerified(true)
-    router.replace('/vault/dashboard')
+    router.replace('/dashboard')
   }, [router])
 
   // Still doing initial check - show nothing to avoid flash

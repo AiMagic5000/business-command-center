@@ -24,6 +24,7 @@ export default function SignInPage() {
         </p>
       </div>
 
+      <div className="w-full flex justify-center">
       <SignIn
         appearance={{
           variables: {
@@ -42,8 +43,9 @@ export default function SignInPage() {
             },
           },
         }}
-        forceRedirectUrl="/vault/dashboard"
+        forceRedirectUrl="/dashboard"
       />
+      </div>
     </div>
   )
 }

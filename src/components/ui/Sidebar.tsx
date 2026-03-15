@@ -26,25 +26,25 @@ interface NavItem {
 const navItems: NavItem[] = [
   {
     label: 'Graph View',
-    href: '/vault/dashboard?view=graph',
+    href: '/dashboard?view=graph',
     icon: <Network className="w-5 h-5" />,
     viewMode: 'graph',
   },
   {
     label: 'List View',
-    href: '/vault/dashboard?view=list',
+    href: '/dashboard?view=list',
     icon: <List className="w-5 h-5" />,
     viewMode: 'list',
   },
   {
     label: 'Timeline',
-    href: '/vault/dashboard?view=timeline',
+    href: '/dashboard?view=timeline',
     icon: <Clock className="w-5 h-5" />,
     viewMode: 'timeline',
   },
   {
     label: 'Documents',
-    href: '/vault/dashboard?view=documents',
+    href: '/dashboard?view=documents',
     icon: <FileText className="w-5 h-5" />,
     viewMode: 'documents',
   },
@@ -215,7 +215,7 @@ export default function Sidebar() {
       <div className="px-3 pb-4 flex flex-col gap-1" style={{ borderTop: '1px solid #1e3a5f' }}>
         <div className="pt-3">
           <Link
-            href="/vault/settings"
+            href="/settings"
             className="flex items-center gap-3 px-2 py-2.5 rounded-lg transition-colors"
             style={{ color: '#94a3b8' }}
             title={collapsed ? 'Settings' : undefined}
