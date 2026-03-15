@@ -154,7 +154,7 @@ export default function DetailPanel({
 
           {/* Panel header */}
           <div
-            className="flex items-center gap-4 px-6 py-3 flex-shrink-0"
+            className="flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 flex-shrink-0"
             style={{ borderBottom: '1px solid #1e3a5f' }}
           >
             <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -180,8 +180,8 @@ export default function DetailPanel({
 
           {/* Tab bar */}
           <div
-            className="flex items-center gap-1 px-6 flex-shrink-0 overflow-x-auto"
-            style={{ borderBottom: '1px solid #1e3a5f' }}
+            className="flex items-center gap-1 px-4 md:px-6 flex-shrink-0 overflow-x-auto scrollbar-hide"
+            style={{ borderBottom: '1px solid #1e3a5f', WebkitOverflowScrolling: 'touch' }}
             role="tablist"
           >
             {TABS.map((tab) => (
@@ -191,7 +191,7 @@ export default function DetailPanel({
                 role="tab"
                 aria-selected={activeTab === tab.id}
                 aria-controls={`tab-panel-${tab.id}`}
-                className="relative px-3 py-3 text-sm font-medium whitespace-nowrap transition-colors flex-shrink-0"
+                className="relative px-3 py-3 text-xs md:text-sm font-medium whitespace-nowrap transition-colors flex-shrink-0"
                 style={{
                   color: activeTab === tab.id ? '#f1f5f9' : '#94a3b8',
                 }}
@@ -213,7 +213,7 @@ export default function DetailPanel({
           <div
             id={`tab-panel-${activeTab}`}
             role="tabpanel"
-            className="flex-1 overflow-y-auto px-6 pt-5"
+            className="flex-1 overflow-y-auto px-4 md:px-6 pt-4 md:pt-5"
             style={{ minHeight: 0 }}
           >
             {renderTabContent()}

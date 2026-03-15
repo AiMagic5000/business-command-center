@@ -1,41 +1,76 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs/server'
-
-// This route decrypts and returns a plaintext credential password.
-// In production: look up the credential in Supabase, verify ownership,
-// decrypt using your server-side key, and return the plaintext.
-// Never store plaintexts -- store AES-256-GCM encrypted values.
+import { createServiceClient } from '@/lib/supabase'
+import { verifyPinSession } from '@/lib/pin'
+import { decrypt } from '@/lib/crypto'
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { userId } = await auth()
-    if (!userId) {
-      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
+    const pinSession = req.cookies.get('bcc-pin-session')?.value
+    if (!pinSession) {
+      return NextResponse.json({ error: 'PIN session missing' }, { status: 403 })
     }
 
-    const credentialId = params.id
+    const sessionUserId = verifyPinSession(pinSession)
+    if (!sessionUserId) {
+      return NextResponse.json({ error: 'PIN session expired' }, { status: 403 })
+    }
+
+    const { id: credentialId } = await params
     if (!credentialId) {
       return NextResponse.json({ error: 'Missing credential ID' }, { status: 400 })
     }
 
-    // TODO: Replace with real Supabase lookup + AES decryption
-    // Example:
-    //   const { data } = await supabase
-    //     .from('entity_credentials')
-    //     .select('encrypted_password, entity_id')
-    //     .eq('id', credentialId)
-    //     .single()
-    //   Verify user owns the entity, then decrypt.
+    const supabase = createServiceClient()
 
-    // Development stub
-    if (process.env.NODE_ENV === 'development') {
-      return NextResponse.json({ password: 'dev-plaintext-password' })
+    const { data: owner } = await supabase
+      .from('business_owners')
+      .select('id, is_admin')
+      .eq('clerk_id', sessionUserId)
+      .single()
+
+    if (!owner) {
+      return NextResponse.json({ error: 'Owner not found' }, { status: 404 })
     }
 
-    return NextResponse.json({ error: 'Not implemented' }, { status: 501 })
+    const { data: credential, error } = await supabase
+      .from('entity_credentials')
+      .select('*, entities!inner(owner_id)')
+      .eq('id', credentialId)
+      .single()
+
+    if (error || !credential) {
+      return NextResponse.json({ error: 'Credential not found' }, { status: 404 })
+    }
+
+    const entity = credential.entities as { owner_id: string }
+    if (!owner.is_admin && entity.owner_id !== owner.id) {
+      return NextResponse.json({ error: 'Access denied' }, { status: 403 })
+    }
+
+    let decryptedPassword = credential.password_encrypted || ''
+    try {
+      if (decryptedPassword && decryptedPassword.includes(':')) {
+        decryptedPassword = decrypt(decryptedPassword)
+      } else if (decryptedPassword.startsWith('ENCRYPT:')) {
+        decryptedPassword = decryptedPassword.replace('ENCRYPT:', '')
+      }
+    } catch {
+      decryptedPassword = '[Decryption failed]'
+    }
+
+    await supabase.from('audit_log').insert({
+      user_id: owner.id,
+      action: 'credential_reveal',
+      entity_type: 'credential',
+      entity_id: credentialId,
+      details: { service: credential.service_name },
+      ip_address: req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip'),
+    })
+
+    return NextResponse.json({ password: decryptedPassword })
   } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }

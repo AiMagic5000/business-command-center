@@ -119,12 +119,12 @@ export default function CredentialCard({ credential, onReveal }: CredentialCardP
             Username
           </label>
           <div className="flex items-center gap-2">
-            <p className="flex-1 text-sm font-mono truncate" style={{ color: '#f1f5f9' }}>
+            <p className="flex-1 text-sm font-mono break-all" style={{ color: '#f1f5f9' }}>
               {credential.username}
             </p>
             <button
               onClick={() => handleCopy('username')}
-              className="flex-shrink-0 p-1.5 rounded-lg transition-colors hover:bg-white/5"
+              className="flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-lg transition-colors hover:bg-white/10"
               aria-label="Copy username"
             >
               <AnimatePresence mode="wait">
@@ -149,7 +149,7 @@ export default function CredentialCard({ credential, onReveal }: CredentialCardP
           </label>
           <div className="flex items-center gap-2">
             <p
-              className="flex-1 text-sm font-mono truncate"
+              className="flex-1 text-sm font-mono break-all"
               style={{ color: passwordVisible ? '#f1f5f9' : '#94a3b8' }}
             >
               {passwordVisible ? plainPassword : '••••••••'}
@@ -159,7 +159,7 @@ export default function CredentialCard({ credential, onReveal }: CredentialCardP
               {passwordVisible && (
                 <button
                   onClick={() => handleCopy('password')}
-                  className="flex-shrink-0 p-1.5 rounded-lg transition-colors hover:bg-white/5"
+                  className="flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-lg transition-colors hover:bg-white/10"
                   aria-label="Copy password"
                 >
                   <AnimatePresence mode="wait">
@@ -180,18 +180,18 @@ export default function CredentialCard({ credential, onReveal }: CredentialCardP
               <button
                 onClick={handleReveal}
                 disabled={revealLoading}
-                className="flex-shrink-0 p-1.5 rounded-lg transition-colors hover:bg-white/5 disabled:opacity-50"
+                className="flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-lg transition-colors hover:bg-white/10 disabled:opacity-50"
                 aria-label={passwordVisible ? 'Hide password' : 'Show password'}
               >
                 {revealLoading ? (
                   <div
-                    className="w-3.5 h-3.5 rounded-full border-2 border-t-transparent animate-spin"
+                    className="w-4 h-4 rounded-full border-2 border-t-transparent animate-spin"
                     style={{ borderColor: '#3b82f6', borderTopColor: 'transparent' }}
                   />
                 ) : passwordVisible ? (
-                  <EyeOff className="w-3.5 h-3.5" style={{ color: '#3b82f6' }} />
+                  <EyeOff className="w-4 h-4" style={{ color: '#3b82f6' }} />
                 ) : (
-                  <Eye className="w-3.5 h-3.5" style={{ color: '#94a3b8' }} />
+                  <Eye className="w-4 h-4" style={{ color: '#94a3b8' }} />
                 )}
               </button>
             </div>

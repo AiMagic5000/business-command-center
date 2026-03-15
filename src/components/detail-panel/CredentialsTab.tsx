@@ -1,6 +1,7 @@
 'use client'
 
 import { Key } from 'lucide-react'
+import { clearPinSession } from '@/lib/pinSession'
 import CredentialCard from '@/components/ui/CredentialCard'
 import type { EntityCredential } from '@/types'
 
@@ -12,6 +13,11 @@ async function handleReveal(id: string): Promise<string> {
   const res = await fetch(`/api/credentials/${id}/reveal`, {
     method: 'POST',
   })
+  if (res.status === 403) {
+    clearPinSession()
+    window.location.reload()
+    throw new Error('PIN session expired')
+  }
   if (!res.ok) throw new Error('Could not reveal credential')
   const data = await res.json()
   return data.password as string
@@ -60,7 +66,7 @@ export default function CredentialsTab({ credentials }: CredentialsTabProps) {
           >
             {categoryLabels[category] ?? category}
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {creds.map((cred) => (
               <CredentialCard key={cred.id} credential={cred} onReveal={handleReveal} />
             ))}
