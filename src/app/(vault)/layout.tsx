@@ -3,17 +3,13 @@ import Sidebar from '@/components/ui/Sidebar'
 import SearchBar from '@/components/ui/SearchBar'
 import { Bell } from 'lucide-react'
 import UserMenu from '@/components/ui/UserMenu'
-import { currentUser } from '@clerk/nextjs/server'
 
-export default async function VaultLayout({
+export default function VaultLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const user = await currentUser()
-  const initials = user
-    ? `${user.firstName?.[0] ?? ''}${user.lastName?.[0] ?? ''}`.toUpperCase() || 'U'
-    : 'U'
+  const initials = 'U'
 
   return (
     <PinGuard>

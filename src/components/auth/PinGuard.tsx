@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@clerk/nextjs'
 import PinEntry from './PinEntry'
 import { isPinSessionValid, clearPinSession } from '@/lib/pinSession'
 
@@ -11,7 +12,15 @@ interface PinGuardProps {
 
 export default function PinGuard({ children }: PinGuardProps) {
   const [pinVerified, setPinVerified] = useState<boolean | null>(null) // null = checking
+  const { isSignedIn, isLoaded } = useAuth()
   const router = useRouter()
+
+  // Redirect to sign-in if Clerk session is not active
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      router.replace('/sign-in')
+    }
+  }, [isLoaded, isSignedIn, router])
 
   const checkSession = useCallback(async () => {
     // First check client-side sessionStorage
