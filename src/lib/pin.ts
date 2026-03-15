@@ -11,7 +11,7 @@ import bcrypt from 'bcryptjs'
 import { createHmac, randomBytes } from 'crypto'
 
 const BCRYPT_ROUNDS = 12
-const SESSION_TTL_MS = 15 * 60 * 1000 // 15 minutes
+const SESSION_TTL_MS = 60 * 60 * 1000 // 1 hour (matches client-side sessionStorage)
 
 // ---------------------------------------------------------------------------
 // PIN hashing

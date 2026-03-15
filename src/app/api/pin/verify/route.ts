@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 15 * 60,
+      maxAge: 60 * 60, // 1 hour (matches client-side sessionStorage)
     })
 
     return response

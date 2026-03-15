@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback, useEffect, useRef } from 'react'
+import { clearPinSession } from '@/lib/pinSession'
 import { useNodesState, useEdgesState, type Node, type Edge } from '@xyflow/react'
 import BusinessGraph from '@/components/graph/BusinessGraph'
 import DetailPanel from '@/components/detail-panel/DetailPanel'
@@ -139,35 +140,47 @@ export default function DashboardPage() {
         setLoading(true)
         setError(null)
 
-        const [ownersRes, entitiesRes] = await Promise.all([
-          fetch('/api/owners'),
-          fetch('/api/entities'),
-        ])
-
-        if (!ownersRes.ok || !entitiesRes.ok) {
-          throw new Error('Failed to load data')
+        // Step 1: Fetch owners first
+        const ownersRes = await fetch('/api/owners')
+        if (!ownersRes.ok) {
+          if (ownersRes.status === 403) throw new Error('PIN session expired')
+          throw new Error('Failed to load owners')
         }
-
         const ownersJson = await ownersRes.json()
-        const entitiesJson = await entitiesRes.json()
-
         const owners: BusinessOwner[] = ownersJson.data || []
-        const entities: DbEntity[] = entitiesJson.data || []
-        const relationships: Relationship[] = entitiesJson.relationships || []
-
-        entitiesRef.current = entities
 
         if (owners.length === 0) {
           setError('No owner profile found')
           return
         }
 
-        const graphData = buildGraphData(owners[0], entities, relationships)
+        // Step 2: For admin, default to first non-admin owner (client data)
+        const primaryOwner = owners.find(o => !o.is_admin) || owners[0]
+
+        // Step 3: Fetch entities for the primary owner
+        const entitiesRes = await fetch(`/api/entities?owner_id=${primaryOwner.id}`)
+        if (!entitiesRes.ok) {
+          if (entitiesRes.status === 403) throw new Error('PIN session expired')
+          throw new Error('Failed to load entities')
+        }
+        const entitiesJson = await entitiesRes.json()
+
+        const entities: DbEntity[] = entitiesJson.data || []
+        const relationships: Relationship[] = entitiesJson.relationships || []
+
+        entitiesRef.current = entities
+
+        const graphData = buildGraphData(primaryOwner, entities, relationships)
         setNodes(graphData.nodes)
         setEdges(graphData.edges)
       } catch (err) {
-        console.error('Dashboard load error:', err)
-        setError(err instanceof Error ? err.message : 'Failed to load data')
+        const message = err instanceof Error ? err.message : 'Failed to load data'
+        if (message === 'PIN session expired') {
+          clearPinSession()
+          window.location.reload()
+          return
+        }
+        setError(message)
       } finally {
         setLoading(false)
       }

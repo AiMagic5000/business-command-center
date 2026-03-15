@@ -13,13 +13,29 @@ export default function PinGuard({ children }: PinGuardProps) {
   const [pinVerified, setPinVerified] = useState<boolean | null>(null) // null = checking
   const router = useRouter()
 
-  const checkSession = useCallback(() => {
-    const valid = isPinSessionValid()
-    if (!valid) {
+  const checkSession = useCallback(async () => {
+    // First check client-side sessionStorage
+    const clientValid = isPinSessionValid()
+    if (!clientValid) {
       clearPinSession()
       setPinVerified(false)
-    } else {
-      setPinVerified(true)
+      return
+    }
+
+    // Client thinks session is valid - verify server cookie agrees
+    try {
+      const res = await fetch('/api/pin/check')
+      if (res.ok) {
+        setPinVerified(true)
+      } else {
+        // Server session expired or missing - force PIN re-entry
+        clearPinSession()
+        setPinVerified(false)
+      }
+    } catch {
+      // Network error - clear and re-prompt
+      clearPinSession()
+      setPinVerified(false)
     }
   }, [])
 
