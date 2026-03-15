@@ -1,6 +1,30 @@
-import { SignIn } from '@clerk/nextjs'
+'use client'
+
+import { useEffect, useState } from 'react'
+import { useAuth } from '@clerk/nextjs'
+import { useRouter } from 'next/navigation'
+
+const CLERK_ACCOUNT_PORTAL = 'https://thankful-owl-17.clerk.accounts.dev'
 
 export default function SignInPage() {
+  const { isSignedIn, isLoaded } = useAuth()
+  const router = useRouter()
+  const [redirecting, setRedirecting] = useState(false)
+
+  useEffect(() => {
+    if (!isLoaded) return
+    if (isSignedIn) {
+      router.replace('/dashboard')
+      return
+    }
+  }, [isLoaded, isSignedIn, router])
+
+  const handleSignIn = () => {
+    setRedirecting(true)
+    const callbackUrl = encodeURIComponent(window.location.origin + '/dashboard')
+    window.location.href = `${CLERK_ACCOUNT_PORTAL}/sign-in?redirect_url=${callbackUrl}`
+  }
+
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center px-4"
@@ -24,28 +48,19 @@ export default function SignInPage() {
         </p>
       </div>
 
-      <div className="w-full flex justify-center">
-      <SignIn
-        appearance={{
-          variables: {
-            colorBackground: '#111827',
-            colorText: '#f1f5f9',
-            colorTextSecondary: '#94a3b8',
-            colorInputBackground: '#1e293b',
-            colorInputText: '#f1f5f9',
-            colorPrimary: '#3b82f6',
-            borderRadius: '0.75rem',
-          },
-          elements: {
-            card: {
-              boxShadow: 'none',
-              border: '1px solid #1e3a5f',
-            },
-          },
+      <button
+        onClick={handleSignIn}
+        disabled={redirecting}
+        className="px-8 py-3 rounded-xl text-base font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60"
+        style={{
+          background: 'linear-gradient(135deg, #1e3a5f 0%, #3b82f6 100%)',
+          color: '#f1f5f9',
+          border: '1px solid #3b82f6',
+          boxShadow: '0 0 20px rgba(59,130,246,0.3)',
         }}
-        forceRedirectUrl="/dashboard"
-      />
-      </div>
+      >
+        {redirecting ? 'Redirecting...' : 'Sign In'}
+      </button>
     </div>
   )
 }
