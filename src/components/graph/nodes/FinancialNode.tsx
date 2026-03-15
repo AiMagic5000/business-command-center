@@ -113,14 +113,14 @@ function FinancialNode({ data, selected, id }: NodeProps) {
             <div className="flex items-center gap-1 mb-0.5">
               <Landmark size={8} style={{ color: colors.text }} />
               <span
-                className="text-[9px] uppercase tracking-widest font-semibold"
+                className="text-[10px] uppercase tracking-wider font-semibold"
                 style={{ color: colors.text }}
               >
                 {accountLabel}
               </span>
             </div>
             <p
-              className="text-[12px] font-semibold leading-tight truncate"
+              className="text-[13px] font-bold leading-tight truncate"
               style={{ color: '#f1f5f9' }}
             >
               {label}

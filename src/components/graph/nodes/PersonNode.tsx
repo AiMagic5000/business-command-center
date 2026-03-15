@@ -122,14 +122,14 @@ function PersonNode({ data, selected, id }: NodeProps) {
             <div className="flex items-center gap-1.5 mb-0.5">
               <User size={9} style={{ color: colors.text }} />
               <span
-                className="text-[9px] uppercase tracking-widest font-semibold"
+                className="text-[10px] uppercase tracking-wider font-semibold"
                 style={{ color: colors.text }}
               >
-                Person
+                Owner
               </span>
             </div>
             <p
-              className="text-[13px] font-semibold leading-tight truncate"
+              className="text-sm font-bold leading-tight truncate"
               style={{ color: '#f1f5f9' }}
             >
               {d.label}

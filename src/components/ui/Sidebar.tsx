@@ -26,25 +26,25 @@ interface NavItem {
 const navItems: NavItem[] = [
   {
     label: 'Graph View',
-    href: '/dashboard?view=graph',
+    href: '/dashboard',
     icon: <Network className="w-5 h-5" />,
-    viewMode: 'graph',
+    viewMode: 'dashboard',
   },
   {
     label: 'List View',
-    href: '/dashboard?view=list',
+    href: '/list',
     icon: <List className="w-5 h-5" />,
     viewMode: 'list',
   },
   {
     label: 'Timeline',
-    href: '/dashboard?view=timeline',
+    href: '/timeline',
     icon: <Clock className="w-5 h-5" />,
     viewMode: 'timeline',
   },
   {
     label: 'Documents',
-    href: '/dashboard?view=documents',
+    href: '/documents',
     icon: <FileText className="w-5 h-5" />,
     viewMode: 'documents',
   },
@@ -172,8 +172,8 @@ export default function Sidebar() {
       {/* Nav items */}
       <nav className="flex-1 px-3 py-4 flex flex-col gap-1 overflow-y-auto">
         {navItems.map((item) => {
-          const isActive = pathname.includes(`view=${item.viewMode}`) ||
-            (item.viewMode === 'graph' && !pathname.includes('view='))
+          const isActive = pathname === item.href ||
+            (item.viewMode === 'dashboard' && pathname === '/')
           return (
             <Link
               key={item.viewMode}

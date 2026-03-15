@@ -99,7 +99,7 @@ function buildOwnerNode(
 ): Node<GraphNodeData> {
   return {
     id: `owner-${owner.id}`,
-    type: 'custom',
+    type: 'person',
     position: { x, y },
     data: {
       id: owner.id,
@@ -128,7 +128,7 @@ function buildEntityNode(
 
   return {
     id: `entity-${entity.id}`,
-    type: 'custom',
+    type: nodeType,
     position: { x, y },
     data: {
       id: entity.id,

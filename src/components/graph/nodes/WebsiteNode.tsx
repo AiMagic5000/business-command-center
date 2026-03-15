@@ -115,7 +115,7 @@ function WebsiteNode({ data, selected, id }: NodeProps) {
               <div className="flex items-center gap-1">
                 <Globe size={8} style={{ color: colors.text }} />
                 <span
-                  className="text-[9px] uppercase tracking-widest font-semibold"
+                  className="text-[10px] uppercase tracking-wider font-semibold"
                   style={{ color: colors.text }}
                 >
                   Website
@@ -145,7 +145,7 @@ function WebsiteNode({ data, selected, id }: NodeProps) {
 
         {/* Domain / label */}
         <p
-          className="text-[13px] font-semibold leading-tight mb-1"
+          className="text-sm font-bold leading-tight mb-1"
           style={{ color: '#f1f5f9' }}
         >
           {label}

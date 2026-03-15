@@ -115,7 +115,7 @@ function TrustNode({ data, selected, id }: NodeProps) {
               <div className="flex items-center gap-1">
                 <Shield size={8} style={{ color: colors.text }} />
                 <span
-                  className="text-[9px] uppercase tracking-widest font-semibold"
+                  className="text-[10px] uppercase tracking-wider font-semibold"
                   style={{ color: colors.text }}
                 >
                   Trust
@@ -150,7 +150,7 @@ function TrustNode({ data, selected, id }: NodeProps) {
 
         {/* Trust name */}
         <p
-          className="text-[14px] font-bold leading-snug mb-1.5"
+          className="text-[15px] font-bold leading-snug mb-1.5"
           style={{ color: '#f1f5f9', textShadow: `0 0 12px ${colors.glow}` }}
         >
           {d.label}

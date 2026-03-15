@@ -97,7 +97,7 @@ function EntityNode({ data, selected, id }: NodeProps) {
               <div className="flex items-center gap-1">
                 <Building2 size={8} style={{ color: colors.text }} />
                 <span
-                  className="text-[9px] uppercase tracking-widest font-semibold"
+                  className="text-[10px] uppercase tracking-wider font-semibold"
                   style={{ color: colors.text }}
                 >
                   Entity
@@ -125,7 +125,7 @@ function EntityNode({ data, selected, id }: NodeProps) {
         </div>
 
         {/* Entity name */}
-        <p className="text-[13px] font-semibold leading-snug mb-2" style={{ color: '#f1f5f9' }}>
+        <p className="text-sm font-bold leading-snug mb-2" style={{ color: '#f1f5f9' }}>
           {d.label}
         </p>
 
