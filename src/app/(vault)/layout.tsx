@@ -1,7 +1,8 @@
 import PinGuard from '@/components/auth/PinGuard'
 import Sidebar from '@/components/ui/Sidebar'
 import SearchBar from '@/components/ui/SearchBar'
-import { Bell, User } from 'lucide-react'
+import { Bell } from 'lucide-react'
+import UserMenu from '@/components/ui/UserMenu'
 import { currentUser } from '@clerk/nextjs/server'
 
 export default async function VaultLayout({
@@ -46,14 +47,8 @@ export default async function VaultLayout({
                 />
               </button>
 
-              {/* User avatar */}
-              <button
-                className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-opacity hover:opacity-80"
-                style={{ background: '#1e3a5f', color: '#d4a84b' }}
-                aria-label="User menu"
-              >
-                {initials || <User className="w-4 h-4" />}
-              </button>
+              {/* User menu with sign-out */}
+              <UserMenu initials={initials} />
             </div>
           </header>
 
