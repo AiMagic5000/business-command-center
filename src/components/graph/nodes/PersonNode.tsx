@@ -74,7 +74,7 @@ function PersonNode({ data, selected, id }: NodeProps) {
         }}
         transition={{ duration: 0.15 }}
         style={{
-          background: `linear-gradient(135deg, #111827 0%, ${colors.bg} 100%)`,
+          background: `linear-gradient(135deg, var(--node-bg) 0%, ${colors.bg} 100%)`,
           border: `1.5px solid ${selected ? colors.primary : 'rgba(34,197,94,0.4)'}`,
           borderRadius: 12,
           padding: '14px 16px 12px',
@@ -114,7 +114,7 @@ function PersonNode({ data, selected, id }: NodeProps) {
             {/* Active dot */}
             <span
               className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
-              style={{ background: '#22c55e', borderColor: '#111827', boxShadow: '0 0 6px #22c55e' }}
+              style={{ background: '#22c55e', borderColor: 'var(--node-bg)', boxShadow: '0 0 6px #22c55e' }}
             />
           </div>
 
@@ -130,7 +130,7 @@ function PersonNode({ data, selected, id }: NodeProps) {
             </div>
             <p
               className="text-sm font-bold leading-tight truncate"
-              style={{ color: '#f1f5f9' }}
+              style={{ color: 'var(--text-primary)' }}
             >
               {d.label}
             </p>
@@ -140,7 +140,7 @@ function PersonNode({ data, selected, id }: NodeProps) {
         {(d.sublabel ?? d.subtitle) && (
           <p
             className="text-[11px] leading-snug truncate px-0.5"
-            style={{ color: '#94a3b8' }}
+            style={{ color: 'var(--text-secondary)' }}
           >
             {d.sublabel ?? d.subtitle}
           </p>
@@ -153,13 +153,13 @@ function PersonNode({ data, selected, id }: NodeProps) {
       </motion.div>
 
       <Handle type="target" position={Position.Top}
-        style={{ background: colors.primary, border: '2px solid #111827', width: 8, height: 8, top: -4 }} />
+        style={{ background: colors.primary, border: '2px solid var(--node-bg)', width: 8, height: 8, top: -4 }} />
       <Handle type="source" position={Position.Bottom}
-        style={{ background: colors.primary, border: '2px solid #111827', width: 8, height: 8, bottom: -4 }} />
+        style={{ background: colors.primary, border: '2px solid var(--node-bg)', width: 8, height: 8, bottom: -4 }} />
       <Handle type="target" position={Position.Left}
-        style={{ background: colors.primary, border: '2px solid #111827', width: 8, height: 8, left: -4 }} />
+        style={{ background: colors.primary, border: '2px solid var(--node-bg)', width: 8, height: 8, left: -4 }} />
       <Handle type="source" position={Position.Right}
-        style={{ background: colors.primary, border: '2px solid #111827', width: 8, height: 8, right: -4 }} />
+        style={{ background: colors.primary, border: '2px solid var(--node-bg)', width: 8, height: 8, right: -4 }} />
     </motion.div>
   )
 }

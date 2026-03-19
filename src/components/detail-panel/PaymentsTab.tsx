@@ -16,11 +16,11 @@ export default function PaymentsTab({ payments }: PaymentsTabProps) {
       <div className="flex flex-col items-center justify-center py-16 gap-3">
         <div
           className="w-12 h-12 rounded-xl flex items-center justify-center"
-          style={{ background: '#1e293b', border: '1px solid #1e3a5f' }}
+          style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border-primary)' }}
         >
-          <DollarSign className="w-6 h-6" style={{ color: '#94a3b8' }} />
+          <DollarSign className="w-6 h-6" style={{ color: 'var(--text-secondary)' }} />
         </div>
-        <p className="text-sm" style={{ color: '#94a3b8' }}>
+        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
           No payments recorded for this entity yet.
         </p>
       </div>
@@ -48,12 +48,12 @@ export default function PaymentsTab({ payments }: PaymentsTabProps) {
       {/* Table */}
       <div
         className="rounded-xl overflow-hidden"
-        style={{ border: '1px solid #1e3a5f' }}
+        style={{ border: '1px solid var(--border-primary)' }}
       >
         {/* Header */}
         <div
           className="grid grid-cols-12 gap-2 px-4 py-2.5 text-xs font-medium uppercase tracking-wider"
-          style={{ background: '#1e293b', color: '#94a3b8' }}
+          style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)' }}
         >
           <span className="col-span-2">Date</span>
           <span className="col-span-4">Description</span>
@@ -71,17 +71,17 @@ export default function PaymentsTab({ payments }: PaymentsTabProps) {
             transition={{ delay: idx * 0.03 }}
             className="grid grid-cols-12 gap-2 px-4 py-3 text-sm items-center"
             style={{
-              borderTop: '1px solid #1e3a5f',
-              background: idx % 2 === 0 ? '#111827' : 'transparent',
+              borderTop: '1px solid var(--border-primary)',
+              background: idx % 2 === 0 ? 'var(--table-row-alt)' : 'transparent',
             }}
           >
-            <span className="col-span-2 text-xs" style={{ color: '#94a3b8' }}>
+            <span className="col-span-2 text-xs" style={{ color: 'var(--text-secondary)' }}>
               {formatDate(payment.date)}
             </span>
-            <span className="col-span-4 truncate" style={{ color: '#f1f5f9' }}>
+            <span className="col-span-4 truncate" style={{ color: 'var(--text-primary)' }}>
               {payment.description}
             </span>
-            <span className="col-span-2 text-xs font-mono" style={{ color: '#94a3b8' }}>
+            <span className="col-span-2 text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>
               {payment.invoiceNumber ?? '--'}
             </span>
             <span className="col-span-2">
@@ -107,9 +107,9 @@ export default function PaymentsTab({ payments }: PaymentsTabProps) {
         {/* Total row */}
         <div
           className="grid grid-cols-12 gap-2 px-4 py-3 text-sm items-center font-semibold"
-          style={{ borderTop: '2px solid #1e3a5f', background: '#1e293b' }}
+          style={{ borderTop: '2px solid var(--border-primary)', background: 'var(--bg-tertiary)' }}
         >
-          <span className="col-span-8" style={{ color: '#94a3b8' }}>
+          <span className="col-span-8" style={{ color: 'var(--text-secondary)' }}>
             Total Paid
           </span>
           <span className="col-span-2" />

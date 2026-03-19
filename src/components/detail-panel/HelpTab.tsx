@@ -168,19 +168,19 @@ function AccordionItem({ question, answer }: HelpSection) {
   return (
     <div
       className="rounded-xl overflow-hidden"
-      style={{ border: '1px solid #1e3a5f' }}
+      style={{ border: '1px solid var(--border-primary)' }}
     >
       <button
         onClick={() => setOpen((v) => !v)}
         className="w-full flex items-center justify-between px-4 py-3 text-left transition-colors hover:bg-white/5"
         aria-expanded={open}
       >
-        <span className="text-sm font-medium" style={{ color: '#f1f5f9' }}>
+        <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
           {question}
         </span>
         <ChevronDown
           className={`w-4 h-4 flex-shrink-0 transition-transform ${open ? 'rotate-180' : ''}`}
-          style={{ color: '#94a3b8' }}
+          style={{ color: 'var(--text-secondary)' }}
         />
       </button>
       <AnimatePresence initial={false}>
@@ -194,7 +194,7 @@ function AccordionItem({ question, answer }: HelpSection) {
           >
             <p
               className="px-4 pb-4 text-sm leading-relaxed"
-              style={{ color: '#94a3b8' }}
+              style={{ color: 'var(--text-secondary)' }}
             >
               {answer}
             </p>
@@ -215,8 +215,8 @@ export default function HelpTab({ entityType }: HelpTabProps) {
         className="flex gap-3 p-4 rounded-xl"
         style={{ background: 'rgba(59, 130, 246, 0.08)', border: '1px solid rgba(59, 130, 246, 0.2)' }}
       >
-        <HelpCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#3b82f6' }} />
-        <p className="text-sm leading-relaxed" style={{ color: '#f1f5f9' }}>
+        <HelpCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: 'var(--accent-blue)' }} />
+        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
           {content.intro}
         </p>
       </div>

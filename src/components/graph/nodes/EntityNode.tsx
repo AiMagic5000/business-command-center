@@ -68,7 +68,7 @@ function EntityNode({ data, selected, id }: NodeProps) {
         }}
         transition={{ duration: 0.15 }}
         style={{
-          background: `linear-gradient(135deg, #111827 0%, ${colors.bg} 100%)`,
+          background: `linear-gradient(135deg, var(--node-bg) 0%, ${colors.bg} 100%)`,
           border: `1.5px dashed ${selected ? colors.primary : 'rgba(245,158,11,0.5)'}`,
           borderRadius: 12,
           padding: '12px 14px',
@@ -125,7 +125,7 @@ function EntityNode({ data, selected, id }: NodeProps) {
         </div>
 
         {/* Entity name */}
-        <p className="text-sm font-bold leading-snug mb-2" style={{ color: '#f1f5f9' }}>
+        <p className="text-sm font-bold leading-snug mb-2" style={{ color: 'var(--text-primary)' }}>
           {d.label}
         </p>
 
@@ -155,13 +155,13 @@ function EntityNode({ data, selected, id }: NodeProps) {
       </motion.div>
 
       <Handle type="target" position={Position.Top}
-        style={{ background: colors.primary, border: '2px solid #111827', width: 8, height: 8, top: -4 }} />
+        style={{ background: colors.primary, border: '2px solid var(--node-bg)', width: 8, height: 8, top: -4 }} />
       <Handle type="source" position={Position.Bottom}
-        style={{ background: colors.primary, border: '2px solid #111827', width: 8, height: 8, bottom: -4 }} />
+        style={{ background: colors.primary, border: '2px solid var(--node-bg)', width: 8, height: 8, bottom: -4 }} />
       <Handle type="target" position={Position.Left}
-        style={{ background: colors.primary, border: '2px solid #111827', width: 8, height: 8, left: -4 }} />
+        style={{ background: colors.primary, border: '2px solid var(--node-bg)', width: 8, height: 8, left: -4 }} />
       <Handle type="source" position={Position.Right}
-        style={{ background: colors.primary, border: '2px solid #111827', width: 8, height: 8, right: -4 }} />
+        style={{ background: colors.primary, border: '2px solid var(--node-bg)', width: 8, height: 8, right: -4 }} />
     </motion.div>
   )
 }

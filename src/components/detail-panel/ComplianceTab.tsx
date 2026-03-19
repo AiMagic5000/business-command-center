@@ -38,11 +38,11 @@ export default function ComplianceTab({ events }: ComplianceTabProps) {
       <div className="flex flex-col items-center justify-center py-16 gap-3">
         <div
           className="w-12 h-12 rounded-xl flex items-center justify-center"
-          style={{ background: '#1e293b', border: '1px solid #1e3a5f' }}
+          style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border-primary)' }}
         >
-          <ClipboardCheck className="w-6 h-6" style={{ color: '#94a3b8' }} />
+          <ClipboardCheck className="w-6 h-6" style={{ color: 'var(--text-secondary)' }} />
         </div>
-        <p className="text-sm" style={{ color: '#94a3b8' }}>
+        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
           No compliance events for this entity.
         </p>
       </div>
@@ -65,7 +65,7 @@ export default function ComplianceTab({ events }: ComplianceTabProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.04 }}
             className="flex gap-4 p-4 rounded-xl"
-            style={{ background: '#111827', border: `1px solid #1e3a5f` }}
+            style={{ background: 'var(--bg-card)', border: '1px solid var(--border-primary)' }}
           >
             {/* Left accent bar */}
             <div
@@ -78,7 +78,7 @@ export default function ComplianceTab({ events }: ComplianceTabProps) {
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between gap-3 flex-wrap">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <p className="text-sm font-medium" style={{ color: '#f1f5f9' }}>
+                  <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
                     {event.eventType}
                   </p>
                   {event.isRecurring && (
@@ -98,12 +98,12 @@ export default function ComplianceTab({ events }: ComplianceTabProps) {
               {/* Due date */}
               <div className="flex items-center gap-3 mt-2 flex-wrap">
                 <div>
-                  <p className="text-xs" style={{ color: '#94a3b8' }}>
+                  <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
                     Due Date
                   </p>
                   <p className="text-sm font-medium" style={{ color }}>
                     {formatDate(event.dueDate)}
-                    <span className="text-xs ml-2" style={{ color: '#94a3b8' }}>
+                    <span className="text-xs ml-2" style={{ color: 'var(--text-secondary)' }}>
                       ({formatDateRelative(event.dueDate)})
                     </span>
                   </p>
@@ -111,10 +111,10 @@ export default function ComplianceTab({ events }: ComplianceTabProps) {
 
                 {event.estimatedCostCents !== undefined && (
                   <div>
-                    <p className="text-xs" style={{ color: '#94a3b8' }}>
+                    <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
                       Est. Cost
                     </p>
-                    <p className="text-sm font-medium" style={{ color: '#d4a84b' }}>
+                    <p className="text-sm font-medium" style={{ color: 'var(--accent-gold)' }}>
                       {formatCurrency(event.estimatedCostCents)}
                     </p>
                   </div>
@@ -123,7 +123,7 @@ export default function ComplianceTab({ events }: ComplianceTabProps) {
 
               {/* Notes */}
               {event.notes && (
-                <p className="text-xs mt-2 leading-relaxed" style={{ color: '#94a3b8' }}>
+                <p className="text-xs mt-2 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                   {event.notes}
                 </p>
               )}

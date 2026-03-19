@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs/server'
 import { createServiceClient } from '@/lib/supabase'
 import { verifyPin, createPinSession } from '@/lib/pin'
 
@@ -10,12 +9,9 @@ const attemptTracker = new Map<string, { count: number; lockedUntil: number }>()
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId } = await auth()
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    const ip = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
 
-    const tracker = attemptTracker.get(userId)
+    const tracker = attemptTracker.get(ip)
     if (tracker && tracker.lockedUntil > Date.now()) {
       const remainingSec = Math.ceil((tracker.lockedUntil - Date.now()) / 1000)
       return NextResponse.json(
@@ -31,33 +27,39 @@ export async function POST(req: NextRequest) {
 
     const supabase = createServiceClient()
 
-    const { data: owner } = await supabase
+    const { data: owners } = await supabase
       .from('business_owners')
       .select('id, pin_hash')
-      .eq('clerk_id', userId)
-      .single()
+      .not('pin_hash', 'is', null)
 
-    if (!owner || !owner.pin_hash) {
-      return NextResponse.json({ error: 'PIN not configured' }, { status: 404 })
+    if (!owners || owners.length === 0) {
+      return NextResponse.json({ error: 'No PIN configured' }, { status: 404 })
     }
 
-    const isValid = await verifyPin(pin, owner.pin_hash)
+    let matchedOwner: { id: string; pin_hash: string } | null = null
+    for (const owner of owners) {
+      const isValid = await verifyPin(pin, owner.pin_hash)
+      if (isValid) {
+        matchedOwner = owner
+        break
+      }
+    }
 
-    if (!isValid) {
-      const current = attemptTracker.get(userId) || { count: 0, lockedUntil: 0 }
+    if (!matchedOwner) {
+      const current = attemptTracker.get(ip) || { count: 0, lockedUntil: 0 }
       const newCount = current.count + 1
-      attemptTracker.set(userId, {
+      attemptTracker.set(ip, {
         count: newCount,
         lockedUntil: newCount >= MAX_ATTEMPTS ? Date.now() + LOCKOUT_MS : 0,
       })
 
       await supabase.from('audit_log').insert({
-        user_id: owner.id,
+        user_id: null,
         action: 'pin_failed',
         entity_type: 'auth',
-        entity_id: owner.id,
+        entity_id: null,
         details: { attempt: newCount },
-        ip_address: req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip'),
+        ip_address: ip,
       })
 
       const remaining = MAX_ATTEMPTS - newCount
@@ -67,25 +69,25 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    attemptTracker.delete(userId)
+    attemptTracker.delete(ip)
 
-    const sessionToken = createPinSession(userId)
+    const sessionToken = createPinSession(matchedOwner.id)
 
     await supabase.from('audit_log').insert({
-      user_id: owner.id,
+      user_id: matchedOwner.id,
       action: 'pin_verified',
       entity_type: 'auth',
-      entity_id: owner.id,
-      ip_address: req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip'),
+      entity_id: matchedOwner.id,
+      ip_address: ip,
     })
 
-    const response = NextResponse.json({ success: true, ownerId: owner.id })
+    const response = NextResponse.json({ success: true, ownerId: matchedOwner.id })
     response.cookies.set('bcc-pin-session', sessionToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60, // 1 hour (matches client-side sessionStorage)
+      maxAge: 60 * 60,
     })
 
     return response

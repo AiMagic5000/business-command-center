@@ -74,12 +74,12 @@ export default function CredentialCard({ credential, onReveal }: CredentialCardP
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       className="rounded-xl overflow-hidden"
-      style={{ background: '#111827', border: '1px solid #1e3a5f' }}
+      style={{ background: 'var(--credential-bg)', border: '1px solid var(--border-primary)' }}
     >
       {/* Card header */}
       <div
         className="flex items-start gap-3 px-4 py-3"
-        style={{ borderBottom: '1px solid #1e3a5f' }}
+        style={{ borderBottom: '1px solid var(--border-primary)' }}
       >
         <div
           className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
@@ -88,7 +88,7 @@ export default function CredentialCard({ credential, onReveal }: CredentialCardP
           <Key className="w-4 h-4" style={{ color: categoryColor }} />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold truncate" style={{ color: '#f1f5f9' }}>
+          <p className="text-sm font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
             {credential.service}
           </p>
           <span
@@ -106,7 +106,7 @@ export default function CredentialCard({ credential, onReveal }: CredentialCardP
             className="flex-shrink-0 p-1 rounded transition-colors hover:bg-white/5"
             aria-label={`Open ${credential.service} website`}
           >
-            <ExternalLink className="w-4 h-4" style={{ color: '#94a3b8' }} />
+            <ExternalLink className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
           </a>
         )}
       </div>
@@ -115,11 +115,11 @@ export default function CredentialCard({ credential, onReveal }: CredentialCardP
       <div className="px-4 py-3 flex flex-col gap-3">
         {/* Username */}
         <div className="flex flex-col gap-1">
-          <label className="text-xs" style={{ color: '#94a3b8' }}>
+          <label className="text-xs" style={{ color: 'var(--text-secondary)' }}>
             Username
           </label>
           <div className="flex items-center gap-2">
-            <p className="flex-1 text-sm font-mono break-all" style={{ color: '#f1f5f9' }}>
+            <p className="flex-1 text-sm font-mono break-all" style={{ color: 'var(--text-primary)' }}>
               {credential.username}
             </p>
             <button
@@ -134,7 +134,7 @@ export default function CredentialCard({ credential, onReveal }: CredentialCardP
                   </motion.span>
                 ) : (
                   <motion.span key="copy" initial={{ scale: 0.8 }} animate={{ scale: 1 }}>
-                    <Copy className="w-3.5 h-3.5" style={{ color: '#94a3b8' }} />
+                    <Copy className="w-3.5 h-3.5" style={{ color: 'var(--text-secondary)' }} />
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -144,13 +144,13 @@ export default function CredentialCard({ credential, onReveal }: CredentialCardP
 
         {/* Password */}
         <div className="flex flex-col gap-1">
-          <label className="text-xs" style={{ color: '#94a3b8' }}>
+          <label className="text-xs" style={{ color: 'var(--text-secondary)' }}>
             Password
           </label>
           <div className="flex items-center gap-2">
             <p
               className="flex-1 text-sm font-mono break-all"
-              style={{ color: passwordVisible ? '#f1f5f9' : '#94a3b8' }}
+              style={{ color: passwordVisible ? 'var(--text-primary)' : 'var(--text-secondary)' }}
             >
               {passwordVisible ? plainPassword : '••••••••'}
             </p>
@@ -169,7 +169,7 @@ export default function CredentialCard({ credential, onReveal }: CredentialCardP
                       </motion.span>
                     ) : (
                       <motion.span key="copy" initial={{ scale: 0.8 }} animate={{ scale: 1 }}>
-                        <Copy className="w-3.5 h-3.5" style={{ color: '#94a3b8' }} />
+                        <Copy className="w-3.5 h-3.5" style={{ color: 'var(--text-secondary)' }} />
                       </motion.span>
                     )}
                   </AnimatePresence>
@@ -186,12 +186,12 @@ export default function CredentialCard({ credential, onReveal }: CredentialCardP
                 {revealLoading ? (
                   <div
                     className="w-4 h-4 rounded-full border-2 border-t-transparent animate-spin"
-                    style={{ borderColor: '#3b82f6', borderTopColor: 'transparent' }}
+                    style={{ borderColor: 'var(--accent-blue)', borderTopColor: 'transparent' }}
                   />
                 ) : passwordVisible ? (
-                  <EyeOff className="w-4 h-4" style={{ color: '#3b82f6' }} />
+                  <EyeOff className="w-4 h-4" style={{ color: 'var(--accent-blue)' }} />
                 ) : (
-                  <Eye className="w-4 h-4" style={{ color: '#94a3b8' }} />
+                  <Eye className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
                 )}
               </button>
             </div>
@@ -199,7 +199,7 @@ export default function CredentialCard({ credential, onReveal }: CredentialCardP
 
           {/* Auto-hide countdown */}
           {passwordVisible && (
-            <p className="text-xs" style={{ color: '#94a3b8' }}>
+            <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
               Hides automatically in 30 seconds
             </p>
           )}
@@ -207,7 +207,7 @@ export default function CredentialCard({ credential, onReveal }: CredentialCardP
 
         {/* Notes */}
         {credential.notes && (
-          <p className="text-xs leading-relaxed" style={{ color: '#94a3b8' }}>
+          <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
             {credential.notes}
           </p>
         )}

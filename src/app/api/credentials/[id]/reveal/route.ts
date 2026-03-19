@@ -28,7 +28,7 @@ export async function POST(
     const { data: owner } = await supabase
       .from('business_owners')
       .select('id, is_admin')
-      .eq('clerk_id', sessionUserId)
+      .eq('id', sessionUserId)
       .single()
 
     if (!owner) {

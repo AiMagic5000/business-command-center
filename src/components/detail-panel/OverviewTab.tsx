@@ -13,10 +13,10 @@ interface OverviewTabProps {
 function InfoRow({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-0.5">
-      <span className="text-xs" style={{ color: '#94a3b8' }}>
+      <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>
         {label}
       </span>
-      <span className="text-sm" style={{ color: '#f1f5f9' }}>
+      <span className="text-sm" style={{ color: 'var(--text-primary)' }}>
         {value}
       </span>
     </div>
@@ -27,7 +27,7 @@ function SectionHeader({ children }: { children: React.ReactNode }) {
   return (
     <h3
       className="text-xs font-semibold uppercase tracking-wider mb-3"
-      style={{ color: '#94a3b8' }}
+      style={{ color: 'var(--text-secondary)' }}
     >
       {children}
     </h3>
@@ -54,7 +54,7 @@ export default function OverviewTab({ entity }: OverviewTabProps) {
               label="Formation Date"
               value={
                 <span className="flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5" style={{ color: '#94a3b8' }} />
+                  <Calendar className="w-3.5 h-3.5" style={{ color: 'var(--text-secondary)' }} />
                   {formatDate(entity.formationDate)}
                 </span>
               }
@@ -65,7 +65,7 @@ export default function OverviewTab({ entity }: OverviewTabProps) {
               label="Industry"
               value={
                 <span className="flex items-center gap-1.5">
-                  <Briefcase className="w-3.5 h-3.5" style={{ color: '#94a3b8' }} />
+                  <Briefcase className="w-3.5 h-3.5" style={{ color: 'var(--text-secondary)' }} />
                   {entity.industry}
                 </span>
               }
@@ -80,10 +80,10 @@ export default function OverviewTab({ entity }: OverviewTabProps) {
           <SectionHeader>Tax Information</SectionHeader>
           <div className="flex items-center gap-3">
             <div className="flex flex-col gap-0.5">
-              <span className="text-xs" style={{ color: '#94a3b8' }}>
+              <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>
                 EIN (Employer ID Number)
               </span>
-              <span className="text-sm font-mono" style={{ color: '#f1f5f9' }}>
+              <span className="text-sm font-mono" style={{ color: 'var(--text-primary)' }}>
                 {einVisible ? entity.ein : maskEIN(entity.ein)}
               </span>
             </div>
@@ -93,9 +93,9 @@ export default function OverviewTab({ entity }: OverviewTabProps) {
               aria-label={einVisible ? 'Hide EIN' : 'Show full EIN'}
             >
               {einVisible ? (
-                <EyeOff className="w-4 h-4" style={{ color: '#3b82f6' }} />
+                <EyeOff className="w-4 h-4" style={{ color: 'var(--accent-blue)' }} />
               ) : (
-                <Eye className="w-4 h-4" style={{ color: '#94a3b8' }} />
+                <Eye className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
               )}
             </button>
           </div>
@@ -106,7 +106,7 @@ export default function OverviewTab({ entity }: OverviewTabProps) {
       {entity.description && (
         <section>
           <SectionHeader>Description</SectionHeader>
-          <p className="text-sm leading-relaxed" style={{ color: '#94a3b8' }}>
+          <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
             {entity.description}
           </p>
         </section>
@@ -121,21 +121,21 @@ export default function OverviewTab({ entity }: OverviewTabProps) {
               <div
                 key={addr.id}
                 className="flex gap-3 p-3 rounded-lg"
-                style={{ background: '#1e293b', border: '1px solid #1e3a5f' }}
+                style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border-primary)' }}
               >
-                <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: '#3b82f6' }} />
+                <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: 'var(--accent-blue)' }} />
                 <div>
-                  <p className="text-xs font-medium mb-1" style={{ color: '#d4a84b' }}>
+                  <p className="text-xs font-medium mb-1" style={{ color: 'var(--accent-gold)' }}>
                     {addr.label}
                   </p>
-                  <p className="text-sm" style={{ color: '#f1f5f9' }}>
+                  <p className="text-sm" style={{ color: 'var(--text-primary)' }}>
                     {addr.street1}
                     {addr.street2 ? `, ${addr.street2}` : ''}
                   </p>
-                  <p className="text-sm" style={{ color: '#f1f5f9' }}>
+                  <p className="text-sm" style={{ color: 'var(--text-primary)' }}>
                     {addr.city}, {addr.state} {addr.zip}
                   </p>
-                  <p className="text-sm" style={{ color: '#94a3b8' }}>
+                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                     {addr.country}
                   </p>
                 </div>
@@ -154,28 +154,28 @@ export default function OverviewTab({ entity }: OverviewTabProps) {
               <div
                 key={contact.id}
                 className="flex gap-3 p-3 rounded-lg"
-                style={{ background: '#1e293b', border: '1px solid #1e3a5f' }}
+                style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border-primary)' }}
               >
                 <div
                   className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ background: '#1e3a5f' }}
+                  style={{ background: 'var(--accent-blue-bg)' }}
                 >
-                  <User className="w-4 h-4" style={{ color: '#3b82f6' }} />
+                  <User className="w-4 h-4" style={{ color: 'var(--accent-blue)' }} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium" style={{ color: '#f1f5f9' }}>
+                  <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
                     {contact.name}
                   </p>
-                  <p className="text-xs" style={{ color: '#d4a84b' }}>
+                  <p className="text-xs" style={{ color: 'var(--accent-gold)' }}>
                     {contact.role}
                   </p>
                   {contact.email && (
-                    <p className="text-xs mt-0.5" style={{ color: '#94a3b8' }}>
+                    <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                       {contact.email}
                     </p>
                   )}
                   {contact.phone && (
-                    <p className="text-xs" style={{ color: '#94a3b8' }}>
+                    <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
                       {contact.phone}
                     </p>
                   )}

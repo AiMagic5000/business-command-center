@@ -20,8 +20,8 @@ const MOCK_RESULTS: SearchResult[] = [
 ]
 
 const typeIcon = (type: SearchResult['type']) => {
-  if (type === 'entity') return <Building2 className="w-4 h-4" style={{ color: '#3b82f6' }} />
-  if (type === 'document') return <FileText className="w-4 h-4" style={{ color: '#d4a84b' }} />
+  if (type === 'entity') return <Building2 className="w-4 h-4" style={{ color: 'var(--accent-blue)' }} />
+  if (type === 'document') return <FileText className="w-4 h-4" style={{ color: 'var(--accent-gold)' }} />
   return <Key className="w-4 h-4" style={{ color: '#10b981' }} />
 }
 
@@ -115,11 +115,11 @@ export default function SearchBar() {
       <div
         className="flex items-center gap-2 px-3 rounded-lg h-9 transition-all"
         style={{
-          background: '#1e293b',
-          border: `1px solid ${open ? '#3b82f6' : '#1e3a5f'}`,
+          background: 'var(--bg-input)',
+          border: `1px solid ${open ? 'var(--accent-blue)' : 'var(--border-primary)'}`,
         }}
       >
-        <Search className="w-4 h-4 flex-shrink-0" style={{ color: '#94a3b8' }} />
+        <Search className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--text-tertiary)' }} />
         <input
           ref={inputRef}
           type="text"
@@ -132,7 +132,7 @@ export default function SearchBar() {
           onKeyDown={handleKeyNav}
           placeholder="Search entities, credentials, documents..."
           className="flex-1 bg-transparent outline-none text-sm placeholder:text-sm"
-          style={{ color: '#f1f5f9' }}
+          style={{ color: 'var(--text-primary)' }}
           aria-label="Search"
           aria-expanded={open && results.length > 0}
           aria-haspopup="listbox"
@@ -142,15 +142,15 @@ export default function SearchBar() {
         <div className="flex items-center gap-2">
           {query && (
             <button onClick={handleClear} aria-label="Clear search">
-              <X className="w-3.5 h-3.5" style={{ color: '#94a3b8' }} />
+              <X className="w-3.5 h-3.5" style={{ color: 'var(--text-tertiary)' }} />
             </button>
           )}
           <kbd
             className="hidden sm:flex items-center gap-0.5 px-1.5 py-0.5 rounded text-xs"
             style={{
-              background: '#0a0e1a',
-              color: '#94a3b8',
-              border: '1px solid #1e3a5f',
+              background: 'var(--bg-primary)',
+              color: 'var(--text-tertiary)',
+              border: '1px solid var(--border-primary)',
               fontFamily: 'monospace',
             }}
           >
@@ -169,8 +169,8 @@ export default function SearchBar() {
             transition={{ duration: 0.15 }}
             className="absolute top-full mt-2 left-0 right-0 rounded-xl overflow-hidden z-50 shadow-2xl"
             style={{
-              background: '#1e293b',
-              border: '1px solid #1e3a5f',
+              background: 'var(--bg-tertiary)',
+              border: '1px solid var(--border-primary)',
             }}
             role="listbox"
           >
@@ -183,27 +183,27 @@ export default function SearchBar() {
                 }}
                 className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors"
                 style={{
-                  background: idx === activeIndex ? 'rgba(59, 130, 246, 0.1)' : 'transparent',
-                  borderBottom: idx < results.length - 1 ? '1px solid #1e3a5f' : 'none',
+                  background: idx === activeIndex ? 'var(--accent-blue-bg)' : 'transparent',
+                  borderBottom: idx < results.length - 1 ? '1px solid var(--border-primary)' : 'none',
                 }}
                 role="option"
                 aria-selected={idx === activeIndex}
               >
                 <span
                   className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-                  style={{ background: '#0a0e1a' }}
+                  style={{ background: 'var(--bg-primary)' }}
                 >
                   {typeIcon(result.type)}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate" style={{ color: '#f1f5f9' }}>
+                  <p className="text-sm font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                     {result.title}
                   </p>
-                  <p className="text-xs truncate" style={{ color: '#94a3b8' }}>
+                  <p className="text-xs truncate" style={{ color: 'var(--text-secondary)' }}>
                     {typeLabel(result.type)} &middot; {result.subtitle}
                   </p>
                 </div>
-                <ArrowRight className="w-4 h-4 flex-shrink-0" style={{ color: '#94a3b8' }} />
+                <ArrowRight className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--text-tertiary)' }} />
               </button>
             ))}
           </motion.div>

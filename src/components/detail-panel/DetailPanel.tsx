@@ -136,8 +136,8 @@ export default function DetailPanel({
           className="flex flex-col flex-shrink-0"
           style={{
             height: resolvedHeight,
-            background: '#111827',
-            borderTop: '1px solid #1e3a5f',
+            background: 'var(--bg-card)',
+            borderTop: '1px solid var(--border-primary)',
           }}
           role="complementary"
           aria-label={`Details for ${selectedEntity.name}`}
@@ -149,21 +149,21 @@ export default function DetailPanel({
             aria-label="Drag to resize panel"
             role="separator"
           >
-            <GripHorizontal className="w-5 h-5" style={{ color: '#1e3a5f' }} />
+            <GripHorizontal className="w-5 h-5" style={{ color: 'var(--border-primary)' }} />
           </div>
 
           {/* Panel header */}
           <div
             className="flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 flex-shrink-0"
-            style={{ borderBottom: '1px solid #1e3a5f' }}
+            style={{ borderBottom: '1px solid var(--border-primary)' }}
           >
             <div className="flex items-center gap-3 flex-1 min-w-0">
-              <h2 className="text-base font-semibold truncate" style={{ color: '#f1f5f9' }}>
+              <h2 className="text-base font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
                 {selectedEntity.name}
               </h2>
               <span
                 className="text-xs px-2 py-0.5 rounded-full flex-shrink-0"
-                style={{ background: '#1e293b', color: '#94a3b8', border: '1px solid #1e3a5f' }}
+                style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)', border: '1px solid var(--border-primary)' }}
               >
                 {entityTypeLabel(selectedEntity.type)}
               </span>
@@ -174,7 +174,7 @@ export default function DetailPanel({
               className="p-2 rounded-lg transition-colors hover:bg-white/5 flex-shrink-0"
               aria-label="Close detail panel"
             >
-              <X className="w-4 h-4" style={{ color: '#94a3b8' }} />
+              <X className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
             </button>
           </div>
 
@@ -201,7 +201,7 @@ export default function DetailPanel({
                   <motion.div
                     layoutId="tab-underline"
                     className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
-                    style={{ background: '#3b82f6' }}
+                    style={{ background: 'var(--accent-blue)' }}
                     transition={{ type: 'spring', stiffness: 400, damping: 35 }}
                   />
                 )}

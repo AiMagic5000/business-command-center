@@ -2,19 +2,100 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bcc-bg: #0a0e1a;
-  --bcc-surface: #111827;
-  --bcc-elevated: #1e293b;
-  --bcc-border: #1e3a5f;
-  --bcc-primary: #3b82f6;
-  --bcc-gold: #d4a84b;
-  --bcc-success: #10b981;
-  --bcc-warning: #f59e0b;
-  --bcc-error: #ef4444;
-  --bcc-text: #f1f5f9;
-  --bcc-text-secondary: #94a3b8;
+/* ── Theme CSS Variables ─────────────────────────────────────────────── */
+
+:root,
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-sidebar: #f8fafc;
+  --bg-header: #ffffff;
+  --bg-input: #f1f5f9;
+  --bg-pin: #f8fafc;
+  --bg-pin-screen: #f1f5f9;
+  --border-primary: #e2e8f0;
+  --border-secondary: #cbd5e1;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --text-heading: #1e293b;
+  --accent-blue: #2563eb;
+  --accent-gold: #b8860b;
+  --accent-blue-bg: rgba(37,99,235,0.08);
+  --accent-gold-bg: rgba(184,134,11,0.08);
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.1);
+  --node-bg: #ffffff;
+  --node-border: #e2e8f0;
+  --edge-color: #94a3b8;
+  --pin-button-bg: #f1f5f9;
+  --pin-button-border: #e2e8f0;
+  --pin-button-text: #0f172a;
+  --pin-dot-empty: #e2e8f0;
+  --pin-dot-filled: #2563eb;
+  --credential-bg: #f8fafc;
+  --overlay-bg: rgba(241,245,249,0.95);
+  --graph-bg: #f8fafc;
+  --graph-dot: #cbd5e1;
+  --graph-controls-bg: rgba(255,255,255,0.95);
+  --graph-minimap-bg: rgba(248,250,252,0.95);
+  --graph-minimap-mask: rgba(241,245,249,0.7);
+  --legend-bg: rgba(255,255,255,0.95);
+  --table-row-alt: #f8fafc;
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-hover: #2563eb;
+
+  color-scheme: light;
 }
+
+[data-theme="dark"] {
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #111827;
+  --bg-tertiary: #1e293b;
+  --bg-card: #111827;
+  --bg-sidebar: #111827;
+  --bg-header: #111827;
+  --bg-input: #1e293b;
+  --bg-pin: #1e293b;
+  --bg-pin-screen: #0a0e1a;
+  --border-primary: #1e3a5f;
+  --border-secondary: #2d4a6f;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --text-heading: #f1f5f9;
+  --accent-blue: #3b82f6;
+  --accent-gold: #d4a84b;
+  --accent-blue-bg: rgba(59,130,246,0.15);
+  --accent-gold-bg: rgba(212,168,75,0.15);
+  --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.5);
+  --node-bg: #111827;
+  --node-border: #1e3a5f;
+  --edge-color: #3b82f6;
+  --pin-button-bg: #111827;
+  --pin-button-border: #1e3a5f;
+  --pin-button-text: #f1f5f9;
+  --pin-dot-empty: #1e293b;
+  --pin-dot-filled: #3b82f6;
+  --credential-bg: #111827;
+  --overlay-bg: rgba(10,14,26,0.95);
+  --graph-bg: #0a0e1a;
+  --graph-dot: #1e3a5f;
+  --graph-controls-bg: rgba(17,24,39,0.9);
+  --graph-minimap-bg: rgba(10,14,26,0.92);
+  --graph-minimap-mask: rgba(10,14,26,0.7);
+  --legend-bg: rgba(17,24,39,0.92);
+  --table-row-alt: #111827;
+  --scrollbar-thumb: #1e3a5f;
+  --scrollbar-hover: #3b82f6;
+
+  color-scheme: dark;
+}
+
+/* ── Base Styles ─────────────────────────────────────────────────────── */
 
 *,
 *::before,
@@ -22,21 +103,18 @@
   box-sizing: border-box;
 }
 
-html {
-  color-scheme: dark;
-}
-
 body {
-  background-color: var(--bcc-bg);
-  color: var(--bcc-text);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Scrollbar styling */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #1e3a5f transparent;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -49,17 +127,17 @@ body {
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #1e3a5f;
+  background-color: var(--scrollbar-thumb);
   border-radius: 99px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background-color: #3b82f6;
+  background-color: var(--scrollbar-hover);
 }
 
 /* Focus ring */
 :focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid var(--accent-blue);
   outline-offset: 2px;
 }
 
@@ -68,9 +146,9 @@ button {
   cursor: pointer;
 }
 
-/* Clerk component overrides */
-.cl-rootBox {
-  width: 100%;
+/* Placeholder text color */
+::placeholder {
+  color: var(--text-tertiary);
 }
 
 @layer utilities {

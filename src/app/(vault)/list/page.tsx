@@ -60,8 +60,8 @@ export default function ListPage() {
       <div className="flex-1 flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-10 h-10 rounded-full border-2 border-t-transparent animate-spin"
-            style={{ borderColor: '#3b82f6', borderTopColor: 'transparent' }} />
-          <p className="text-sm" style={{ color: '#94a3b8' }}>Loading entities...</p>
+            style={{ borderColor: 'var(--accent-blue)', borderTopColor: 'transparent' }} />
+          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Loading entities...</p>
         </div>
       </div>
     )
@@ -70,16 +70,16 @@ export default function ListPage() {
   return (
     <div className="flex-1 overflow-y-auto p-6">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold" style={{ color: '#f1f5f9' }}>All Entities</h1>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>All Entities</h1>
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#64748b' }} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'var(--text-tertiary)' }} />
           <input
             type="text"
             placeholder="Search entities..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="pl-10 pr-4 py-2 rounded-lg text-sm outline-none w-64"
-            style={{ background: '#1e293b', border: '1px solid #1e3a5f', color: '#f1f5f9' }}
+            style={{ background: 'var(--bg-input)', border: '1px solid var(--border-primary)', color: 'var(--text-primary)' }}
           />
         </div>
       </div>
@@ -94,8 +94,8 @@ export default function ListPage() {
               key={entity.id}
               className="flex items-center gap-4 p-4 rounded-xl transition-all hover:scale-[1.005] cursor-pointer group"
               style={{
-                background: '#111827',
-                border: '1px solid #1e3a5f',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border-primary)',
               }}
               onClick={() => window.location.href = '/dashboard'}
             >
@@ -110,16 +110,16 @@ export default function ListPage() {
               </div>
 
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold truncate" style={{ color: '#f1f5f9' }}>
+                <p className="text-sm font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
                   {entity.name}
                 </p>
                 <div className="flex items-center gap-3 mt-1">
-                  <span className="text-xs" style={{ color: '#64748b' }}>{config.label}</span>
+                  <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{config.label}</span>
                   {entity.jurisdiction && (
-                    <span className="text-xs" style={{ color: '#475569' }}>{entity.jurisdiction}</span>
+                    <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{entity.jurisdiction}</span>
                   )}
                   {entity.formation_date && (
-                    <span className="text-xs" style={{ color: '#475569' }}>
+                    <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
                       Est. {new Date(entity.formation_date).getFullYear()}
                     </span>
                   )}
@@ -137,14 +137,14 @@ export default function ListPage() {
               </div>
 
               <ChevronRight className="w-4 h-4 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                style={{ color: '#475569' }} />
+                style={{ color: 'var(--text-tertiary)' }} />
             </div>
           )
         })}
 
         {filtered.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-sm" style={{ color: '#64748b' }}>
+            <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
               {search ? 'No entities match your search.' : 'No entities found.'}
             </p>
           </div>

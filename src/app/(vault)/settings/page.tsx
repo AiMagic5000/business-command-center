@@ -1,21 +1,18 @@
 'use client'
 
-import { useUser, useClerk } from '@clerk/nextjs'
 import { LogOut, Shield, Key, Bell, User } from 'lucide-react'
 import { useState } from 'react'
 import { clearPinSession } from '@/lib/pinSession'
 
 export default function SettingsPage() {
-  const { user } = useUser()
-  const { signOut } = useClerk()
   const [changingPin, setChangingPin] = useState(false)
   const [currentPin, setCurrentPin] = useState('')
   const [newPin, setNewPin] = useState('')
   const [pinMessage, setPinMessage] = useState('')
 
-  const handleSignOut = async () => {
+  const handleSignOut = () => {
     clearPinSession()
-    await signOut({ redirectUrl: '/sign-in' })
+    window.location.href = '/'
   }
 
   const handleLockVault = () => {
@@ -50,7 +47,7 @@ export default function SettingsPage() {
 
   return (
     <div className="flex-1 overflow-y-auto p-8">
-      <h1 className="text-2xl font-bold mb-8" style={{ color: '#f1f5f9' }}>
+      <h1 className="text-2xl font-bold mb-8" style={{ color: 'var(--text-primary)' }}>
         Settings
       </h1>
 
@@ -58,22 +55,18 @@ export default function SettingsPage() {
         {/* Account Info */}
         <div
           className="rounded-xl p-6"
-          style={{ background: '#111827', border: '1px solid #1e3a5f' }}
+          style={{ background: 'var(--bg-card)', border: '1px solid var(--border-primary)' }}
         >
           <div className="flex items-center gap-3 mb-4">
-            <User className="w-5 h-5" style={{ color: '#3b82f6' }} />
-            <h2 className="text-lg font-semibold" style={{ color: '#f1f5f9' }}>
+            <User className="w-5 h-5" style={{ color: 'var(--accent-blue)' }} />
+            <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
               Account
             </h2>
           </div>
-          <div className="space-y-2 text-sm" style={{ color: '#94a3b8' }}>
+          <div className="space-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
             <p>
-              <span style={{ color: '#64748b' }}>Name:</span>{' '}
-              {user?.fullName || 'Loading...'}
-            </p>
-            <p>
-              <span style={{ color: '#64748b' }}>Email:</span>{' '}
-              {user?.primaryEmailAddress?.emailAddress || 'Loading...'}
+              <span style={{ color: 'var(--text-tertiary)' }}>Access:</span>{' '}
+              PIN-protected vault
             </p>
           </div>
         </div>
@@ -81,11 +74,11 @@ export default function SettingsPage() {
         {/* Security */}
         <div
           className="rounded-xl p-6"
-          style={{ background: '#111827', border: '1px solid #1e3a5f' }}
+          style={{ background: 'var(--bg-card)', border: '1px solid var(--border-primary)' }}
         >
           <div className="flex items-center gap-3 mb-4">
-            <Shield className="w-5 h-5" style={{ color: '#d4a84b' }} />
-            <h2 className="text-lg font-semibold" style={{ color: '#f1f5f9' }}>
+            <Shield className="w-5 h-5" style={{ color: 'var(--accent-gold)' }} />
+            <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
               Security
             </h2>
           </div>
@@ -95,12 +88,12 @@ export default function SettingsPage() {
             <button
               onClick={handleLockVault}
               className="flex items-center gap-3 px-4 py-3 rounded-lg w-full text-left transition-colors hover:bg-white/5"
-              style={{ color: '#f1f5f9' }}
+              style={{ color: 'var(--text-primary)' }}
             >
-              <Key className="w-4 h-4" style={{ color: '#d4a84b' }} />
+              <Key className="w-4 h-4" style={{ color: 'var(--accent-gold)' }} />
               <div>
                 <p className="text-sm font-medium">Lock Vault</p>
-                <p className="text-xs" style={{ color: '#64748b' }}>
+                <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
                   Requires PIN re-entry to access data
                 </p>
               </div>
@@ -111,12 +104,12 @@ export default function SettingsPage() {
               <button
                 onClick={() => setChangingPin(true)}
                 className="flex items-center gap-3 px-4 py-3 rounded-lg w-full text-left transition-colors hover:bg-white/5"
-                style={{ color: '#f1f5f9' }}
+                style={{ color: 'var(--text-primary)' }}
               >
-                <Shield className="w-4 h-4" style={{ color: '#3b82f6' }} />
+                <Shield className="w-4 h-4" style={{ color: 'var(--accent-blue)' }} />
                 <div>
                   <p className="text-sm font-medium">Change PIN</p>
-                  <p className="text-xs" style={{ color: '#64748b' }}>
+                  <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
                     Update your 6-digit vault access code
                   </p>
                 </div>
@@ -131,9 +124,9 @@ export default function SettingsPage() {
                   onChange={(e) => setCurrentPin(e.target.value.replace(/\D/g, ''))}
                   className="w-full px-3 py-2 rounded-lg text-sm outline-none"
                   style={{
-                    background: '#1e293b',
-                    border: '1px solid #1e3a5f',
-                    color: '#f1f5f9',
+                    background: 'var(--bg-input)',
+                    border: '1px solid var(--border-primary)',
+                    color: 'var(--text-primary)',
                   }}
                 />
                 <input
@@ -144,9 +137,9 @@ export default function SettingsPage() {
                   onChange={(e) => setNewPin(e.target.value.replace(/\D/g, ''))}
                   className="w-full px-3 py-2 rounded-lg text-sm outline-none"
                   style={{
-                    background: '#1e293b',
-                    border: '1px solid #1e3a5f',
-                    color: '#f1f5f9',
+                    background: 'var(--bg-input)',
+                    border: '1px solid var(--border-primary)',
+                    color: 'var(--text-primary)',
                   }}
                 />
                 {pinMessage && (
@@ -163,7 +156,7 @@ export default function SettingsPage() {
                   <button
                     onClick={handleChangePin}
                     className="px-4 py-2 rounded-lg text-sm font-medium"
-                    style={{ background: '#3b82f6', color: '#fff' }}
+                    style={{ background: 'var(--accent-blue)', color: '#fff' }}
                   >
                     Save
                   </button>
@@ -175,7 +168,7 @@ export default function SettingsPage() {
                       setPinMessage('')
                     }}
                     className="px-4 py-2 rounded-lg text-sm"
-                    style={{ color: '#94a3b8' }}
+                    style={{ color: 'var(--text-secondary)' }}
                   >
                     Cancel
                   </button>
@@ -188,15 +181,15 @@ export default function SettingsPage() {
         {/* Notifications placeholder */}
         <div
           className="rounded-xl p-6"
-          style={{ background: '#111827', border: '1px solid #1e3a5f' }}
+          style={{ background: 'var(--bg-card)', border: '1px solid var(--border-primary)' }}
         >
           <div className="flex items-center gap-3 mb-4">
             <Bell className="w-5 h-5" style={{ color: '#10b981' }} />
-            <h2 className="text-lg font-semibold" style={{ color: '#f1f5f9' }}>
+            <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
               Notifications
             </h2>
           </div>
-          <p className="text-sm" style={{ color: '#64748b' }}>
+          <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
             Email alerts for compliance deadlines and payment reminders coming soon.
           </p>
         </div>
@@ -205,7 +198,7 @@ export default function SettingsPage() {
         <button
           onClick={handleSignOut}
           className="flex items-center gap-3 px-6 py-4 rounded-xl w-full text-left transition-colors hover:bg-red-500/10"
-          style={{ background: '#111827', border: '1px solid #ef4444', color: '#ef4444' }}
+          style={{ background: 'var(--bg-card)', border: '1px solid #ef4444', color: '#ef4444' }}
         >
           <LogOut className="w-5 h-5" />
           <div>

@@ -134,7 +134,7 @@ export default function PinEntry({ onSuccess }: PinEntryProps) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center"
-      style={{ background: '#0a0e1a' }}
+      style={{ background: 'var(--bg-pin-screen)' }}
     >
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -146,14 +146,14 @@ export default function PinEntry({ onSuccess }: PinEntryProps) {
         <div className="flex flex-col items-center gap-3">
           <div
             className="w-14 h-14 rounded-2xl flex items-center justify-center"
-            style={{ background: '#1e293b', border: '1px solid #1e3a5f' }}
+            style={{ background: 'var(--bg-pin)', border: '1px solid var(--border-primary)' }}
           >
-            <Shield className="w-7 h-7" style={{ color: '#3b82f6' }} />
+            <Shield className="w-7 h-7" style={{ color: 'var(--accent-blue)' }} />
           </div>
-          <h1 className="text-xl font-semibold" style={{ color: '#f1f5f9' }}>
+          <h1 className="text-xl font-semibold" style={{ color: 'var(--text-primary)' }}>
             Enter Your 6-Digit PIN
           </h1>
-          <p className="text-sm text-center" style={{ color: '#94a3b8' }}>
+          <p className="text-sm text-center" style={{ color: 'var(--text-secondary)' }}>
             This PIN keeps your vault locked when you step away.
           </p>
         </div>
@@ -175,13 +175,13 @@ export default function PinEntry({ onSuccess }: PinEntryProps) {
                   backgroundColor: isError
                     ? '#ef4444'
                     : filled
-                    ? '#3b82f6'
-                    : '#1e293b',
+                    ? 'var(--pin-dot-filled)'
+                    : 'var(--pin-dot-empty)',
                 }}
                 transition={{ duration: 0.15 }}
                 className="w-4 h-4 rounded-full"
                 style={{
-                  border: `2px solid ${isError ? '#ef4444' : filled ? '#3b82f6' : '#1e3a5f'}`,
+                  border: `2px solid ${isError ? '#ef4444' : filled ? 'var(--pin-dot-filled)' : 'var(--border-primary)'}`,
                 }}
               />
             )
@@ -213,7 +213,7 @@ export default function PinEntry({ onSuccess }: PinEntryProps) {
               <p className="text-sm font-medium" style={{ color: '#ef4444' }}>
                 Too many wrong tries. Locked out.
               </p>
-              <p className="text-sm" style={{ color: '#94a3b8' }}>
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                 Try again in{' '}
                 <span className="font-mono font-bold" style={{ color: '#f59e0b' }}>
                   {formatLockout(lockoutRemaining)}
@@ -229,8 +229,8 @@ export default function PinEntry({ onSuccess }: PinEntryProps) {
               exit={{ opacity: 0 }}
               className="flex items-center gap-2"
             >
-              <Loader2 className="w-4 h-4 animate-spin" style={{ color: '#3b82f6' }} />
-              <span className="text-sm" style={{ color: '#94a3b8' }}>
+              <Loader2 className="w-4 h-4 animate-spin" style={{ color: 'var(--accent-blue)' }} />
+              <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                 Checking...
               </span>
             </motion.div>
@@ -253,10 +253,10 @@ export default function PinEntry({ onSuccess }: PinEntryProps) {
                     onClick={handleBackspace}
                     disabled={status === 'loading' || status === 'locked'}
                     className="h-16 rounded-2xl flex items-center justify-center transition-opacity disabled:opacity-40"
-                    style={{ background: '#1e293b', border: '1px solid #1e3a5f' }}
+                    style={{ background: 'var(--bg-pin)', border: '1px solid var(--border-primary)' }}
                     aria-label="Backspace"
                   >
-                    <Delete className="w-5 h-5" style={{ color: '#94a3b8' }} />
+                    <Delete className="w-5 h-5" style={{ color: 'var(--text-secondary)' }} />
                   </motion.button>
                 )
               }
@@ -269,9 +269,9 @@ export default function PinEntry({ onSuccess }: PinEntryProps) {
                   disabled={status === 'loading' || status === 'locked'}
                   className="h-16 rounded-2xl text-xl font-semibold transition-colors disabled:opacity-40"
                   style={{
-                    background: '#111827',
-                    border: '1px solid #1e3a5f',
-                    color: '#f1f5f9',
+                    background: 'var(--pin-button-bg)',
+                    border: '1px solid var(--pin-button-border)',
+                    color: 'var(--pin-button-text)',
                   }}
                   aria-label={`Digit ${key}`}
                 >

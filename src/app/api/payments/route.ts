@@ -1,18 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs/server'
 import { createServiceClient } from '@/lib/supabase'
 import { verifyPinSession } from '@/lib/pin'
 
 export async function GET(req: NextRequest) {
   try {
-    const { userId } = await auth()
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
     const pinSession = req.cookies.get('bcc-pin-session')?.value
-    if (!pinSession || !verifyPinSession(pinSession)) {
-      return NextResponse.json({ error: 'PIN session expired' }, { status: 403 })
+    if (!pinSession) {
+      return NextResponse.json({ error: 'Not authenticated' }, { status: 403 })
+    }
+    const ownerId = verifyPinSession(pinSession)
+    if (!ownerId) {
+      return NextResponse.json({ error: 'Session expired' }, { status: 403 })
     }
 
     const supabase = createServiceClient()
@@ -20,16 +18,16 @@ export async function GET(req: NextRequest) {
     const { data: owner } = await supabase
       .from('business_owners')
       .select('id, is_admin')
-      .eq('clerk_id', userId)
+      .eq('id', ownerId)
       .single()
 
     if (!owner) {
       return NextResponse.json({ error: 'Owner not found' }, { status: 404 })
     }
 
-    const ownerId = req.nextUrl.searchParams.get('owner_id')
+    const queryOwnerId = req.nextUrl.searchParams.get('owner_id')
     const entityId = req.nextUrl.searchParams.get('entity_id')
-    const targetOwnerId = owner.is_admin && ownerId ? ownerId : owner.id
+    const targetOwnerId = owner.is_admin && queryOwnerId ? queryOwnerId : owner.id
 
     let query = supabase
       .from('payments')

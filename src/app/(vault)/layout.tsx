@@ -1,6 +1,7 @@
 import PinGuard from '@/components/auth/PinGuard'
 import Sidebar from '@/components/ui/Sidebar'
 import SearchBar from '@/components/ui/SearchBar'
+import ThemeToggle from '@/components/ui/ThemeToggle'
 import { Bell } from 'lucide-react'
 import UserMenu from '@/components/ui/UserMenu'
 
@@ -13,7 +14,7 @@ export default function VaultLayout({
 
   return (
     <PinGuard>
-      <div className="flex h-screen overflow-hidden" style={{ background: '#0a0e1a' }}>
+      <div className="flex h-screen overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
         {/* Left sidebar */}
         <Sidebar />
 
@@ -22,23 +23,26 @@ export default function VaultLayout({
           {/* Top bar */}
           <header
             className="flex items-center justify-between px-6 h-16 flex-shrink-0"
-            style={{ borderBottom: '1px solid #1e3a5f', background: '#111827' }}
+            style={{ borderBottom: '1px solid var(--border-primary)', background: 'var(--bg-header)' }}
           >
             <div className="flex-1 max-w-lg">
               <SearchBar />
             </div>
 
             <div className="flex items-center gap-3 ml-4">
+              {/* Theme toggle */}
+              <ThemeToggle />
+
               {/* Notification bell */}
               <button
-                className="relative w-9 h-9 rounded-lg flex items-center justify-center transition-colors hover:bg-white/5"
+                className="relative w-9 h-9 rounded-lg flex items-center justify-center transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                 aria-label="Notifications"
               >
-                <Bell className="w-5 h-5" style={{ color: '#94a3b8' }} />
+                <Bell className="w-5 h-5" style={{ color: 'var(--text-tertiary)' }} />
                 {/* Unread dot */}
                 <span
                   className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full"
-                  style={{ background: '#3b82f6' }}
+                  style={{ background: 'var(--accent-blue)' }}
                   aria-hidden="true"
                 />
               </button>

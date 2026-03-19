@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { useClerk } from '@clerk/nextjs'
 import { LogOut, Settings, Lock } from 'lucide-react'
 import Link from 'next/link'
 import { clearPinSession } from '@/lib/pinSession'
@@ -13,7 +12,6 @@ interface UserMenuProps {
 export default function UserMenu({ initials }: UserMenuProps) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-  const { signOut } = useClerk()
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -25,9 +23,9 @@ export default function UserMenu({ initials }: UserMenuProps) {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  const handleSignOut = async () => {
+  const handleSignOut = () => {
     clearPinSession()
-    await signOut({ redirectUrl: '/sign-in' })
+    window.location.href = '/'
   }
 
   const handleLockVault = () => {
@@ -40,7 +38,7 @@ export default function UserMenu({ initials }: UserMenuProps) {
       <button
         onClick={() => setOpen((v) => !v)}
         className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-opacity hover:opacity-80"
-        style={{ background: '#1e3a5f', color: '#d4a84b' }}
+        style={{ background: 'var(--accent-blue-bg)', color: 'var(--accent-gold)' }}
         aria-label="User menu"
         aria-expanded={open}
       >
@@ -50,28 +48,28 @@ export default function UserMenu({ initials }: UserMenuProps) {
       {open && (
         <div
           className="absolute right-0 top-12 w-48 rounded-xl py-2 z-50 shadow-xl"
-          style={{ background: '#1e293b', border: '1px solid #1e3a5f' }}
+          style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border-primary)' }}
         >
           <button
             onClick={handleLockVault}
-            className="flex items-center gap-3 px-4 py-2.5 w-full text-left text-sm transition-colors hover:bg-white/5"
-            style={{ color: '#f1f5f9' }}
+            className="flex items-center gap-3 px-4 py-2.5 w-full text-left text-sm transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+            style={{ color: 'var(--text-primary)' }}
           >
-            <Lock className="w-4 h-4" style={{ color: '#d4a84b' }} />
+            <Lock className="w-4 h-4" style={{ color: 'var(--accent-gold)' }} />
             Lock Vault
           </button>
 
           <Link
             href="/settings"
             onClick={() => setOpen(false)}
-            className="flex items-center gap-3 px-4 py-2.5 w-full text-sm transition-colors hover:bg-white/5"
-            style={{ color: '#f1f5f9' }}
+            className="flex items-center gap-3 px-4 py-2.5 w-full text-sm transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+            style={{ color: 'var(--text-primary)' }}
           >
-            <Settings className="w-4 h-4" style={{ color: '#94a3b8' }} />
+            <Settings className="w-4 h-4" style={{ color: 'var(--text-tertiary)' }} />
             Settings
           </Link>
 
-          <div className="my-1" style={{ borderTop: '1px solid #1e3a5f' }} />
+          <div className="my-1" style={{ borderTop: '1px solid var(--border-primary)' }} />
 
           <button
             onClick={handleSignOut}

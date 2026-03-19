@@ -29,11 +29,11 @@ export default function CredentialsTab({ credentials }: CredentialsTabProps) {
       <div className="flex flex-col items-center justify-center py-16 gap-3">
         <div
           className="w-12 h-12 rounded-xl flex items-center justify-center"
-          style={{ background: '#1e293b', border: '1px solid #1e3a5f' }}
+          style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border-primary)' }}
         >
-          <Key className="w-6 h-6" style={{ color: '#94a3b8' }} />
+          <Key className="w-6 h-6" style={{ color: 'var(--text-secondary)' }} />
         </div>
-        <p className="text-sm" style={{ color: '#94a3b8' }}>
+        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
           No credentials saved for this entity yet.
         </p>
       </div>
@@ -62,7 +62,7 @@ export default function CredentialsTab({ credentials }: CredentialsTabProps) {
         <section key={category}>
           <h3
             className="text-xs font-semibold uppercase tracking-wider mb-3"
-            style={{ color: '#94a3b8' }}
+            style={{ color: 'var(--text-secondary)' }}
           >
             {categoryLabels[category] ?? category}
           </h3>

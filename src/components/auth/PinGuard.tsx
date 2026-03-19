@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { useAuth } from '@clerk/nextjs'
 import PinEntry from './PinEntry'
 import { isPinSessionValid, clearPinSession } from '@/lib/pinSession'
 
@@ -11,19 +10,10 @@ interface PinGuardProps {
 }
 
 export default function PinGuard({ children }: PinGuardProps) {
-  const [pinVerified, setPinVerified] = useState<boolean | null>(null) // null = checking
-  const { isSignedIn, isLoaded } = useAuth()
+  const [pinVerified, setPinVerified] = useState<boolean | null>(null)
   const router = useRouter()
 
-  // Redirect to sign-in if Clerk session is not active
-  useEffect(() => {
-    if (isLoaded && !isSignedIn) {
-      router.replace('/sign-in')
-    }
-  }, [isLoaded, isSignedIn, router])
-
   const checkSession = useCallback(async () => {
-    // First check client-side sessionStorage
     const clientValid = isPinSessionValid()
     if (!clientValid) {
       clearPinSession()
@@ -31,29 +21,24 @@ export default function PinGuard({ children }: PinGuardProps) {
       return
     }
 
-    // Client thinks session is valid - verify server cookie agrees
     try {
       const res = await fetch('/api/pin/check')
       if (res.ok) {
         setPinVerified(true)
       } else {
-        // Server session expired or missing - force PIN re-entry
         clearPinSession()
         setPinVerified(false)
       }
     } catch {
-      // Network error - clear and re-prompt
       clearPinSession()
       setPinVerified(false)
     }
   }, [])
 
-  // Initial check on mount
   useEffect(() => {
     checkSession()
   }, [checkSession])
 
-  // Re-check every 60 seconds for session expiry
   useEffect(() => {
     if (!pinVerified) return
     const interval = setInterval(() => {
@@ -66,7 +51,6 @@ export default function PinGuard({ children }: PinGuardProps) {
     return () => clearInterval(interval)
   }, [pinVerified])
 
-  // Page visibility check: re-verify when user returns to tab
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
@@ -82,17 +66,10 @@ export default function PinGuard({ children }: PinGuardProps) {
     router.replace('/dashboard')
   }, [router])
 
-  // Still doing initial check - show nothing to avoid flash
   if (pinVerified === null) {
     return (
-      <div
-        className="fixed inset-0 flex items-center justify-center"
-        style={{ background: '#0a0e1a' }}
-      >
-        <div
-          className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-          style={{ borderColor: '#3b82f6', borderTopColor: 'transparent' }}
-        />
+      <div className="fixed inset-0 flex items-center justify-center" style={{ background: 'var(--bg-pin-screen)' }}>
+        <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: 'var(--accent-blue)', borderTopColor: 'transparent' }} />
       </div>
     )
   }

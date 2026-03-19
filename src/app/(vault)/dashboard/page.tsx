@@ -246,9 +246,9 @@ export default function DashboardPage() {
         <div className="flex flex-col items-center gap-4">
           <div
             className="w-10 h-10 rounded-full border-2 border-t-transparent animate-spin"
-            style={{ borderColor: '#3b82f6', borderTopColor: 'transparent' }}
+            style={{ borderColor: 'var(--accent-blue)', borderTopColor: 'transparent' }}
           />
-          <p className="text-sm" style={{ color: '#94a3b8' }}>
+          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
             Loading your business ecosystem...
           </p>
         </div>
@@ -266,7 +266,7 @@ export default function DashboardPage() {
           <button
             onClick={() => window.location.reload()}
             className="text-sm px-4 py-2 rounded-lg"
-            style={{ background: '#1e293b', color: '#94a3b8', border: '1px solid #1e3a5f' }}
+            style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)', border: '1px solid var(--border-primary)' }}
           >
             Retry
           </button>

@@ -64,8 +64,8 @@ function LegendPanel() {
   return (
     <div
       style={{
-        background: 'rgba(17,24,39,0.92)',
-        border: '1px solid #1e3a5f',
+        background: 'var(--legend-bg)',
+        border: '1px solid var(--border-primary)',
         borderRadius: 10,
         padding: '12px 14px',
         backdropFilter: 'blur(12px)',
@@ -74,7 +74,7 @@ function LegendPanel() {
     >
       <p
         className="text-[9px] uppercase tracking-widest font-bold mb-2.5"
-        style={{ color: '#475569' }}
+        style={{ color: 'var(--text-tertiary)' }}
       >
         Node Types
       </p>
@@ -93,7 +93,7 @@ function LegendPanel() {
                   flexShrink: 0,
                 }}
               />
-              <span className="text-[11px]" style={{ color: '#94a3b8' }}>
+              <span className="text-[11px]" style={{ color: 'var(--text-secondary)' }}>
                 {label}
               </span>
             </div>
@@ -104,7 +104,7 @@ function LegendPanel() {
       {/* Edge legend */}
       <p
         className="text-[9px] uppercase tracking-widest font-bold mt-3 mb-2"
-        style={{ color: '#475569' }}
+        style={{ color: 'var(--text-tertiary)' }}
       >
         Relationships
       </p>
@@ -124,7 +124,7 @@ function LegendPanel() {
                 strokeDasharray={dash === 'none' ? undefined : dash}
               />
             </svg>
-            <span className="text-[11px]" style={{ color: '#94a3b8' }}>
+            <span className="text-[11px]" style={{ color: 'var(--text-secondary)' }}>
               {label}
             </span>
           </div>
@@ -213,7 +213,7 @@ function BusinessGraphInner({
         animated: false,
       }}
       style={{
-        background: '#0a0e1a',
+        background: 'var(--graph-bg)',
       }}
       proOptions={{ hideAttribution: true }}
     >
@@ -222,7 +222,7 @@ function BusinessGraphInner({
         variant={BackgroundVariant.Dots}
         gap={24}
         size={1}
-        color="#1e3a5f"
+        color="var(--graph-dot)"
         style={{ opacity: 0.5 }}
       />
 
@@ -230,8 +230,8 @@ function BusinessGraphInner({
       <Controls
         showInteractive={false}
         style={{
-          background: 'rgba(17,24,39,0.9)',
-          border: '1px solid #1e3a5f',
+          background: 'var(--graph-controls-bg)',
+          border: '1px solid var(--border-primary)',
           borderRadius: 8,
           boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
         }}
@@ -244,11 +244,11 @@ function BusinessGraphInner({
         zoomable
         pannable
         style={{
-          background: 'rgba(10,14,26,0.92)',
-          border: '1px solid #1e3a5f',
+          background: 'var(--graph-minimap-bg)',
+          border: '1px solid var(--border-primary)',
           borderRadius: 8,
         }}
-        maskColor="rgba(10,14,26,0.7)"
+        maskColor="var(--graph-minimap-mask)"
       />
 
       {/* Legend -- top right */}

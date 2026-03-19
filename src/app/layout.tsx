@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { ClerkProvider } from '@clerk/nextjs'
+import { ThemeProvider } from '@/lib/theme-context'
 import './globals.css'
 
 const inter = Inter({
@@ -20,19 +20,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en" className={inter.variable}>
-        <body
-          className="antialiased"
-          style={{
-            background: '#0a0e1a',
-            color: '#f1f5f9',
-            fontFamily: 'var(--font-inter), system-ui, sans-serif',
-          }}
-        >
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <body
+        className="antialiased"
+        style={{ fontFamily: 'var(--font-inter), system-ui, sans-serif' }}
+      >
+        <ThemeProvider>
           {children}
-        </body>
-      </html>
-    </ClerkProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   )
 }

@@ -8,7 +8,7 @@
 // ============================================================================
 
 import bcrypt from 'bcryptjs'
-import { createHmac, randomBytes } from 'crypto'
+import { createHmac, randomBytes, timingSafeEqual } from 'crypto'
 
 const BCRYPT_ROUNDS = 12
 const SESSION_TTL_MS = 60 * 60 * 1000 // 1 hour (matches client-side sessionStorage)
@@ -116,9 +116,11 @@ export function verifyPinSession(token: string): string | null {
   const encodedPayload = token.slice(0, dotIndex)
   const providedSignature = token.slice(dotIndex + 1)
 
-  // Verify signature
+  // Verify signature (timing-safe comparison to prevent timing attacks)
   const expectedSignature = sign(encodedPayload, secret)
-  if (providedSignature !== expectedSignature) return null
+  const a = Buffer.from(providedSignature, 'utf8')
+  const b = Buffer.from(expectedSignature, 'utf8')
+  if (a.length !== b.length || !timingSafeEqual(a, b)) return null
 
   // Decode and validate payload
   let payload: PinSessionPayload

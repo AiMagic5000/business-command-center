@@ -1,36 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs/server'
 import { createServiceClient } from '@/lib/supabase'
 import { verifyPinSession } from '@/lib/pin'
 
 export async function GET(req: NextRequest) {
   try {
-    const { userId } = await auth()
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
     const pinSession = req.cookies.get('bcc-pin-session')?.value
-    if (!pinSession || !verifyPinSession(pinSession)) {
-      return NextResponse.json({ error: 'PIN session expired' }, { status: 403 })
+    if (!pinSession) {
+      return NextResponse.json({ error: 'Not authenticated' }, { status: 403 })
+    }
+    const ownerId = verifyPinSession(pinSession)
+    if (!ownerId) {
+      return NextResponse.json({ error: 'Session expired' }, { status: 403 })
     }
 
     const supabase = createServiceClient()
 
-    const { data: owner } = await supabase
-      .from('business_owners')
-      .select('id')
-      .eq('clerk_id', userId)
-      .single()
-
-    if (!owner) {
-      return NextResponse.json({ error: 'Not found' }, { status: 404 })
-    }
-
     const { data: layout } = await supabase
       .from('graph_layouts')
       .select('layout_json')
-      .eq('owner_id', owner.id)
+      .eq('owner_id', ownerId)
       .single()
 
     return NextResponse.json({ success: true, data: layout?.layout_json || {} })
@@ -42,34 +30,23 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId } = await auth()
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
     const pinSession = req.cookies.get('bcc-pin-session')?.value
-    if (!pinSession || !verifyPinSession(pinSession)) {
-      return NextResponse.json({ error: 'PIN session expired' }, { status: 403 })
+    if (!pinSession) {
+      return NextResponse.json({ error: 'Not authenticated' }, { status: 403 })
+    }
+    const ownerId = verifyPinSession(pinSession)
+    if (!ownerId) {
+      return NextResponse.json({ error: 'Session expired' }, { status: 403 })
     }
 
     const { layout_json } = await req.json()
 
     const supabase = createServiceClient()
 
-    const { data: owner } = await supabase
-      .from('business_owners')
-      .select('id')
-      .eq('clerk_id', userId)
-      .single()
-
-    if (!owner) {
-      return NextResponse.json({ error: 'Not found' }, { status: 404 })
-    }
-
     const { error } = await supabase
       .from('graph_layouts')
       .upsert({
-        owner_id: owner.id,
+        owner_id: ownerId,
         layout_json,
         updated_at: new Date().toISOString()
       }, { onConflict: 'owner_id' })
