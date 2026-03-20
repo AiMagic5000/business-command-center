@@ -95,7 +95,7 @@ export default function DocumentsTab({ documents }: DocumentsTabProps) {
             {/* Actions */}
             <div className="flex items-center gap-2 flex-shrink-0">
               <a
-                href={doc.fileUrl}
+                href={`/api/documents/${doc.id}/download`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 rounded-lg transition-colors hover:bg-white/5"
@@ -104,8 +104,8 @@ export default function DocumentsTab({ documents }: DocumentsTabProps) {
                 <ExternalLink className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
               </a>
               <a
-                href={doc.fileUrl}
-                download={doc.name}
+                href={`/api/documents/${doc.id}/download`}
+                download
                 className="p-2 rounded-lg transition-colors hover:bg-white/5"
                 aria-label={`Download ${doc.name}`}
               >

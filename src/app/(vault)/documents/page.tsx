@@ -178,12 +178,15 @@ export default function DocumentsPage() {
                       )}
                     </div>
                   </div>
-                  <button
+                  <a
+                    href={`/api/documents/${doc.id}/download`}
+                    download
                     className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg hover:bg-white/5"
                     title="Download"
+                    onClick={e => e.stopPropagation()}
                   >
                     <Download className="w-4 h-4" style={{ color: '#94a3b8' }} />
-                  </button>
+                  </a>
                 </div>
               </div>
             )
