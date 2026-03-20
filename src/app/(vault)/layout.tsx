@@ -2,7 +2,7 @@ import PinGuard from '@/components/auth/PinGuard'
 import Sidebar from '@/components/ui/Sidebar'
 import SearchBar from '@/components/ui/SearchBar'
 import ThemeToggle from '@/components/ui/ThemeToggle'
-import { Bell } from 'lucide-react'
+import { Bell, Mail } from 'lucide-react'
 import UserMenu from '@/components/ui/UserMenu'
 
 export default function VaultLayout({
@@ -33,19 +33,16 @@ export default function VaultLayout({
               {/* Theme toggle */}
               <ThemeToggle />
 
-              {/* Notification bell */}
-              <button
-                className="relative w-9 h-9 rounded-lg flex items-center justify-center transition-colors hover:bg-black/5 dark:hover:bg-white/5"
-                aria-label="Notifications"
+              {/* Support contact */}
+              <a
+                href="mailto:support@startmybusiness.us"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors text-xs"
+                style={{ color: 'var(--text-tertiary)', border: '1px solid var(--border-primary)' }}
+                title="Contact support"
               >
-                <Bell className="w-5 h-5" style={{ color: 'var(--text-tertiary)' }} />
-                {/* Unread dot */}
-                <span
-                  className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full"
-                  style={{ background: 'var(--accent-blue)' }}
-                  aria-hidden="true"
-                />
-              </button>
+                <Mail className="w-4 h-4" />
+                <span className="hidden sm:inline">support@startmybusiness.us</span>
+              </a>
 
               {/* User menu with sign-out */}
               <UserMenu initials={initials} />

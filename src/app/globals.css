@@ -3,51 +3,7 @@
 @tailwind utilities;
 
 /* ── Theme CSS Variables ─────────────────────────────────────────────── */
-
-[data-theme="light"] {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #f1f5f9;
-  --bg-card: #ffffff;
-  --bg-sidebar: #f8fafc;
-  --bg-header: #ffffff;
-  --bg-input: #f1f5f9;
-  --bg-pin: #f8fafc;
-  --bg-pin-screen: #f1f5f9;
-  --border-primary: #e2e8f0;
-  --border-secondary: #cbd5e1;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-tertiary: #94a3b8;
-  --text-heading: #1e293b;
-  --accent-blue: #2563eb;
-  --accent-gold: #b8860b;
-  --accent-blue-bg: rgba(37,99,235,0.08);
-  --accent-gold-bg: rgba(184,134,11,0.08);
-  --shadow: 0 1px 3px rgba(0,0,0,0.08);
-  --shadow-lg: 0 4px 12px rgba(0,0,0,0.1);
-  --node-bg: #ffffff;
-  --node-border: #e2e8f0;
-  --edge-color: #94a3b8;
-  --pin-button-bg: #f1f5f9;
-  --pin-button-border: #e2e8f0;
-  --pin-button-text: #0f172a;
-  --pin-dot-empty: #e2e8f0;
-  --pin-dot-filled: #2563eb;
-  --credential-bg: #f8fafc;
-  --overlay-bg: rgba(241,245,249,0.95);
-  --graph-bg: #f8fafc;
-  --graph-dot: #cbd5e1;
-  --graph-controls-bg: rgba(255,255,255,0.95);
-  --graph-minimap-bg: rgba(248,250,252,0.95);
-  --graph-minimap-mask: rgba(241,245,249,0.7);
-  --legend-bg: rgba(255,255,255,0.95);
-  --table-row-alt: #f8fafc;
-  --scrollbar-thumb: #cbd5e1;
-  --scrollbar-hover: #2563eb;
-
-  color-scheme: light;
-}
+/* Dark is default (:root). Light overrides via [data-theme="light"] AFTER. */
 
 :root,
 [data-theme="dark"] {
@@ -91,8 +47,51 @@
   --table-row-alt: #111827;
   --scrollbar-thumb: #1e3a5f;
   --scrollbar-hover: #3b82f6;
-
   color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-sidebar: #f8fafc;
+  --bg-header: #ffffff;
+  --bg-input: #f1f5f9;
+  --bg-pin: #f8fafc;
+  --bg-pin-screen: #f1f5f9;
+  --border-primary: #e2e8f0;
+  --border-secondary: #cbd5e1;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --text-heading: #1e293b;
+  --accent-blue: #2563eb;
+  --accent-gold: #b8860b;
+  --accent-blue-bg: rgba(37,99,235,0.08);
+  --accent-gold-bg: rgba(184,134,11,0.08);
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.1);
+  --node-bg: #ffffff;
+  --node-border: #e2e8f0;
+  --edge-color: #94a3b8;
+  --pin-button-bg: #f1f5f9;
+  --pin-button-border: #e2e8f0;
+  --pin-button-text: #0f172a;
+  --pin-dot-empty: #e2e8f0;
+  --pin-dot-filled: #2563eb;
+  --credential-bg: #f8fafc;
+  --overlay-bg: rgba(241,245,249,0.95);
+  --graph-bg: #f8fafc;
+  --graph-dot: #cbd5e1;
+  --graph-controls-bg: rgba(255,255,255,0.95);
+  --graph-minimap-bg: rgba(248,250,252,0.95);
+  --graph-minimap-mask: rgba(241,245,249,0.7);
+  --legend-bg: rgba(255,255,255,0.95);
+  --table-row-alt: #f8fafc;
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-hover: #2563eb;
+  color-scheme: light;
 }
 
 /* ── Base Styles ─────────────────────────────────────────────────────── */
