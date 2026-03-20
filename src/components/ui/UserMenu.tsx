@@ -25,7 +25,7 @@ export default function UserMenu({ initials }: UserMenuProps) {
 
   const handleSignOut = () => {
     clearPinSession()
-    window.location.href = '/'
+    window.location.reload()
   }
 
   const handleLockVault = () => {
