@@ -2,7 +2,7 @@ import PinGuard from '@/components/auth/PinGuard'
 import Sidebar from '@/components/ui/Sidebar'
 import SearchBar from '@/components/ui/SearchBar'
 import ThemeToggle from '@/components/ui/ThemeToggle'
-import { Bell, Mail } from 'lucide-react'
+import { Mail } from 'lucide-react'
 import UserMenu from '@/components/ui/UserMenu'
 
 export default function VaultLayout({
